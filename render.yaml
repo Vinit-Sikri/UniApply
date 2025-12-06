@@ -1,11 +1,22 @@
+# Render Blueprint Configuration
+# Note: If you encounter issues with this file, use manual deployment instead
+# See RENDER_MANUAL_DEPLOYMENT.md for step-by-step instructions
+
 services:
+  # PostgreSQL Database
+  - type: pg
+    name: uniapply-db
+    plan: free
+    databaseName: uniapply_db
+
   # Backend API Service
   - type: web
     name: uniapply-backend
     env: node
     plan: free
-    buildCommand: cd backend && npm install
-    startCommand: cd backend && npm start
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
@@ -35,36 +46,16 @@ services:
         generateValue: true
       - key: JWT_EXPIRE
         value: 7d
-      - key: FRONTEND_URL
-        fromService:
-          type: web
-          name: uniapply-frontend
-          property: host
-      - key: RAZORPAY_KEY_ID
-        sync: false
-      - key: RAZORPAY_KEY_SECRET
-        sync: false
-      - key: GEMINI_API_KEY
-        sync: false
+      - key: UPLOAD_DIR
+        value: ./uploads
+      - key: MAX_FILE_SIZE
+        value: 10485760
 
   # Frontend Web Service
   - type: web
     name: uniapply-frontend
     env: node
     plan: free
-    buildCommand: cd frontend && npm install && npm run build
-    startCommand: cd frontend && npm run preview
-    envVars:
-      - key: VITE_API_URL
-        fromService:
-          type: web
-          name: uniapply-backend
-          property: host
-
-  # PostgreSQL Database
-  - type: pg
-    name: uniapply-db
-    plan: free
-    databaseName: uniapply_db
-    user: uniapply_user
-
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm run preview

@@ -152,6 +152,18 @@ async function startServer() {
       console.log('🔄 Synchronizing database models for production...');
       await sequelize.sync({ alter: true });
       console.log('✅ Database models synchronized.');
+      
+      // Initialize database (seed data) in production - runs automatically
+      // This will seed document types, universities, and create admin user
+      setImmediate(async () => {
+        try {
+          const initializeDatabase = require('./scripts/init-db');
+          await initializeDatabase();
+        } catch (initError) {
+          console.error('⚠️  Database initialization error (non-critical):', initError.message);
+          // Don't fail server startup if initialization fails
+        }
+      });
     }
     
     app.listen(PORT, () => {
