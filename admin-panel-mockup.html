@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniApply - Admin Panel UI Mockup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .screen { display: none; }
+        .screen.active { display: block; }
+    </style>
+</head>
+<body class="bg-slate-100">
+    
+    <!-- NAVIGATION FOR VIEWING DIFFERENT SCREENS -->
+    <div class="fixed top-0 left-0 right-0 bg-slate-900 text-white py-3 px-6 z-50 flex items-center justify-between">
+        <span class="font-bold">🔧 Admin Panel UI Screens</span>
+        <div class="flex gap-2 flex-wrap">
+            <button onclick="showScreen('dashboard')" class="px-3 py-1 bg-orange-600 rounded text-sm hover:bg-orange-700">Dashboard</button>
+            <button onclick="showScreen('applications')" class="px-3 py-1 bg-slate-700 rounded text-sm hover:bg-slate-600">Applications</button>
+            <button onclick="showScreen('app-review')" class="px-3 py-1 bg-slate-700 rounded text-sm hover:bg-slate-600">App Review</button>
+            <button onclick="showScreen('doc-config')" class="px-3 py-1 bg-slate-700 rounded text-sm hover:bg-slate-600">Doc Config</button>
+            <button onclick="showScreen('tickets')" class="px-3 py-1 bg-slate-700 rounded text-sm hover:bg-slate-600">Tickets</button>
+            <button onclick="showScreen('faqs')" class="px-3 py-1 bg-slate-700 rounded text-sm hover:bg-slate-600">FAQs</button>
+            <button onclick="showScreen('refunds')" class="px-3 py-1 bg-slate-700 rounded text-sm hover:bg-slate-600">Refunds</button>
+        </div>
+    </div>
+
+    <div class="pt-16">
+        
+        <!-- ========================================== -->
+        <!-- SCREEN 1: ADMIN DASHBOARD -->
+        <!-- ========================================== -->
+        <div id="dashboard" class="screen active">
+            <div class="flex min-h-screen">
+                <!-- Admin Sidebar -->
+                <div class="w-64 bg-slate-900 text-white p-4 fixed h-full">
+                    <div class="flex items-center gap-3 mb-8 p-2">
+                        <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-xl"></i>
+                        </div>
+                        <div>
+                            <span class="text-xl font-bold">UniApply</span>
+                            <span class="text-xs text-slate-400 block">Admin Panel</span>
+                        </div>
+                    </div>
+                    
+                    <nav class="space-y-1">
+                        <a href="#" class="flex items-center justify-between px-4 py-3 rounded-lg bg-orange-600 text-white">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-home w-5"></i>
+                                <span>Dashboard</span>
+                            </div>
+                        </a>
+                        <a href="#" class="flex items-center justify-between px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-file-alt w-5"></i>
+                                <span>Applications</span>
+                            </div>
+                            <span class="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">12</span>
+                        </a>
+                        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800">
+                            <i class="fas fa-file-check w-5"></i>
+                            <span>Document Config</span>
+                        </a>
+                        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800">
+                            <i class="fas fa-university w-5"></i>
+                            <span>Universities</span>
+                        </a>
+                        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800">
+                            <i class="fas fa-users w-5"></i>
+                            <span>Students</span>
+                        </a>
+                        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800">
+                            <i class="fas fa-credit-card w-5"></i>
+                            <span>Payments</span>
+                        </a>
+                        <a href="#" class="flex items-center justify-between px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-undo w-5"></i>
+                                <span>Refunds</span>
+                            </div>
+                            <span class="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">3</span>
+                        </a>
+                        <a href="#" class="flex items-center justify-between px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-comments w-5"></i>
+                                <span>Support Tickets</span>
+                            </div>
+                            <span class="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">5</span>
+                        </a>
+                        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800">
+                            <i class="fas fa-question-circle w-5"></i>
+                            <span>FAQs</span>
+                        </a>
+                        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800">
+                            <i class="fas fa-chart-bar w-5"></i>
+                            <span>Analytics</span>
+                        </a>
+                        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800">
+                            <i class="fas fa-cog w-5"></i>
+                            <span>Settings</span>
+                        </a>
+                    </nav>
+                </div>
+                
+                <!-- Main Content -->
+                <div class="flex-1 ml-64">
+                    <!-- Header -->
+                    <header class="bg-white border-b border-slate-200 px-6 py-4 flex justify-between items-center sticky top-16">
+                        <div class="relative">
+                            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input type="text" placeholder="Search applications, students..." class="pl-10 pr-4 py-2 border border-slate-200 rounded-lg w-96 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        </div>
+                        
+                        <div class="flex items-center gap-4">
+                            <button class="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg">
+                                <i class="fas fa-bell text-xl"></i>
+                                <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                            </button>
+                            
+                            <div class="flex items-center gap-3 pl-4 border-l border-slate-200">
+                                <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user text-orange-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-slate-900">Dr. Sharma</p>
+                                    <p class="text-xs text-slate-500">Super Admin</p>
+                                </div>
+                                <i class="fas fa-chevron-down text-slate-400 text-xs"></i>
+                            </div>
+                        </div>
+                    </header>
+                    
+                    <!-- Dashboard Content -->
+                    <div class="p-6 space-y-6">
+                        <!-- Header -->
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h1 class="text-2xl font-bold text-slate-900">Dashboard</h1>
+                                <p class="text-slate-500">Welcome back! Here's what's happening today.</p>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <select class="px-4 py-2 border border-slate-200 rounded-lg text-sm">
+                                    <option>Last 7 days</option>
+                                    <option>Last 30 days</option>
+                                    <option>Last 90 days</option>
+                                </select>
+                                <button class="px-4 py-2 bg-orange-600 text-white rounded-lg text-sm font-medium hover:bg-orange-700">
+                                    Export Report
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Stats Grid -->
+                        <div class="grid grid-cols-4 gap-4">
+                            <div class="bg-white rounded-xl p-5 border border-slate-200">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
+                                        <i class="fas fa-file-alt text-blue-600 text-xl"></i>
+                                    </div>
+                                    <div class="flex items-center gap-1 text-sm text-green-600">
+                                        <i class="fas fa-arrow-up text-xs"></i> +12%
+                                    </div>
+                                </div>
+                                <p class="text-2xl font-bold text-slate-900">1,247</p>
+                                <p class="text-sm text-slate-500">Total Applications</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-5 border border-slate-200">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="w-12 h-12 rounded-lg bg-yellow-100 flex items-center justify-center">
+                                        <i class="fas fa-clock text-yellow-600 text-xl"></i>
+                                    </div>
+                                    <div class="flex items-center gap-1 text-sm text-red-600">
+                                        <i class="fas fa-arrow-down text-xs"></i> -5%
+                                    </div>
+                                </div>
+                                <p class="text-2xl font-bold text-slate-900">89</p>
+                                <p class="text-sm text-slate-500">Pending Review</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-5 border border-slate-200">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center">
+                                        <i class="fas fa-rupee-sign text-green-600 text-xl"></i>
+                                    </div>
+                                    <div class="flex items-center gap-1 text-sm text-green-600">
+                                        <i class="fas fa-arrow-up text-xs"></i> +18%
+                                    </div>
+                                </div>
+                                <p class="text-2xl font-bold text-slate-900">₹24.5L</p>
+                                <p class="text-sm text-slate-500">Revenue (This Month)</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-5 border border-slate-200">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="w-12 h-12 rounded-lg bg-red-100 flex items-center justify-center">
+                                        <i class="fas fa-comments text-red-600 text-xl"></i>
+                                    </div>
+                                    <div class="flex items-center gap-1 text-sm text-red-600">
+                                        <i class="fas fa-arrow-up text-xs"></i> +3
+                                    </div>
+                                </div>
+                                <p class="text-2xl font-bold text-slate-900">23</p>
+                                <p class="text-sm text-slate-500">Open Tickets</p>
+                            </div>
+                        </div>
+
+                        <!-- Main Content Grid -->
+                        <div class="grid grid-cols-3 gap-6">
+                            <!-- Recent Applications -->
+                            <div class="col-span-2 bg-white rounded-xl border border-slate-200">
+                                <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+                                    <h2 class="text-lg font-semibold text-slate-900">Recent Applications</h2>
+                                    <a href="#" class="text-orange-600 text-sm font-medium hover:text-orange-700">View All →</a>
+                                </div>
+                                <div class="divide-y divide-slate-100">
+                                    <div class="p-4 flex items-center justify-between hover:bg-slate-50">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-user text-slate-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-slate-900">Priya Singh</p>
+                                                <p class="text-sm text-slate-500">IIT Delhi - M.Tech CS</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-4">
+                                            <span class="text-xs text-slate-400">10 min ago</span>
+                                            <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs font-medium">Submitted</span>
+                                            <i class="fas fa-chevron-right text-slate-400"></i>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 flex items-center justify-between hover:bg-slate-50">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-user text-slate-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-slate-900">Amit Kumar</p>
+                                                <p class="text-sm text-slate-500">IIT Bombay - MBA</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-4">
+                                            <span class="text-xs text-slate-400">25 min ago</span>
+                                            <span class="px-3 py-1 bg-yellow-100 text-yellow-600 rounded-full text-xs font-medium">Under Review</span>
+                                            <i class="fas fa-chevron-right text-slate-400"></i>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 flex items-center justify-between hover:bg-slate-50">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-user text-slate-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-slate-900">Neha Gupta</p>
+                                                <p class="text-sm text-slate-500">BITS Pilani - M.Tech DS</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-4">
+                                            <span class="text-xs text-slate-400">1 hour ago</span>
+                                            <span class="px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-xs font-medium">Docs Pending</span>
+                                            <i class="fas fa-chevron-right text-slate-400"></i>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 flex items-center justify-between hover:bg-slate-50">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-user text-slate-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-slate-900">Rahul Sharma</p>
+                                                <p class="text-sm text-slate-500">NIT Trichy - M.Tech AI</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-4">
+                                            <span class="text-xs text-slate-400">2 hours ago</span>
+                                            <span class="px-3 py-1 bg-green-100 text-green-600 rounded-full text-xs font-medium">Verified</span>
+                                            <i class="fas fa-chevron-right text-slate-400"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Column -->
+                            <div class="space-y-6">
+                                <!-- Application Status Breakdown -->
+                                <div class="bg-white rounded-xl border border-slate-200 p-5">
+                                    <h3 class="font-semibold text-slate-900 mb-4">Application Status</h3>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+                                                <span class="text-sm text-slate-600">Submitted</span>
+                                            </div>
+                                            <span class="font-medium text-slate-900">45</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                                <span class="text-sm text-slate-600">Under Review</span>
+                                            </div>
+                                            <span class="font-medium text-slate-900">89</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-3 h-3 rounded-full bg-orange-500"></div>
+                                                <span class="text-sm text-slate-600">Docs Pending</span>
+                                            </div>
+                                            <span class="font-medium text-slate-900">32</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                                <span class="text-sm text-slate-600">Verified</span>
+                                            </div>
+                                            <span class="font-medium text-slate-900">156</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-3 h-3 rounded-full bg-purple-500"></div>
+                                                <span class="text-sm text-slate-600">Payment Pending</span>
+                                            </div>
+                                            <span class="font-medium text-slate-900">28</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Today's Tasks -->
+                                <div class="bg-white rounded-xl border border-slate-200 p-5">
+                                    <h3 class="font-semibold text-slate-900 mb-4">Today's Tasks</h3>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center gap-3 p-3 bg-red-50 rounded-lg">
+                                            <i class="fas fa-exclamation-circle text-red-500"></i>
+                                            <div class="flex-1">
+                                                <p class="text-sm font-medium text-slate-900">5 refund requests pending</p>
+                                                <p class="text-xs text-slate-500">Requires immediate attention</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-3 p-3 bg-yellow-50 rounded-lg">
+                                            <i class="fas fa-clock text-yellow-500"></i>
+                                            <div class="flex-1">
+                                                <p class="text-sm font-medium text-slate-900">12 documents to verify</p>
+                                                <p class="text-xs text-slate-500">From 8 applications</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+                                            <i class="fas fa-comments text-blue-500"></i>
+                                            <div class="flex-1">
+                                                <p class="text-sm font-medium text-slate-900">3 tickets escalated</p>
+                                                <p class="text-xs text-slate-500">High priority</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 2: APPLICATIONS MANAGEMENT -->
+        <!-- ========================================== -->
+        <div id="applications" class="screen">
+            <div class="flex min-h-screen">
+                <div class="w-64 bg-slate-900 text-white p-4 fixed h-full">
+                    <div class="flex items-center gap-3 mb-8 p-2">
+                        <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-xl"></i>
+                        </div>
+                        <div>
+                            <span class="text-xl font-bold">UniApply</span>
+                            <span class="text-xs text-slate-400 block">Admin Panel</span>
+                        </div>
+                    </div>
+                    <nav class="space-y-1">
+                        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800">
+                            <i class="fas fa-home w-5"></i><span>Dashboard</span>
+                        </a>
+                        <a href="#" class="flex items-center justify-between px-4 py-3 rounded-lg bg-orange-600 text-white">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-file-alt w-5"></i><span>Applications</span>
+                            </div>
+                            <span class="bg-white/20 text-xs px-2 py-0.5 rounded-full">12</span>
+                        </a>
+                    </nav>
+                </div>
+                
+                <div class="flex-1 ml-64">
+                    <header class="bg-white border-b border-slate-200 px-6 py-4 flex justify-between items-center sticky top-16">
+                        <div class="relative">
+                            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input type="text" placeholder="Search applications..." class="pl-10 pr-4 py-2 border border-slate-200 rounded-lg w-96">
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-orange-600"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-slate-900">Dr. Sharma</p>
+                                <p class="text-xs text-slate-500">Super Admin</p>
+                            </div>
+                        </div>
+                    </header>
+                    
+                    <div class="p-6 space-y-6">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h1 class="text-2xl font-bold text-slate-900">Applications</h1>
+                                <p class="text-slate-500">Manage and review all student applications</p>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 flex items-center gap-2">
+                                    <i class="fas fa-filter"></i> Filters
+                                </button>
+                                <button class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 flex items-center gap-2">
+                                    <i class="fas fa-download"></i> Export
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Filters -->
+                        <div class="flex gap-2 overflow-x-auto pb-2">
+                            <button class="px-4 py-2 bg-orange-600 text-white rounded-lg text-sm font-medium">All (1,247)</button>
+                            <button class="px-4 py-2 bg-slate-100 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-200">New (45)</button>
+                            <button class="px-4 py-2 bg-slate-100 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-200">Under Review (89)</button>
+                            <button class="px-4 py-2 bg-slate-100 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-200">Docs Pending (32)</button>
+                            <button class="px-4 py-2 bg-slate-100 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-200">Verified (156)</button>
+                            <button class="px-4 py-2 bg-slate-100 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-200">Payment Due (28)</button>
+                        </div>
+
+                        <!-- Applications Table -->
+                        <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+                            <table class="w-full">
+                                <thead class="bg-slate-50">
+                                    <tr>
+                                        <th class="text-left text-sm font-medium text-slate-500 px-4 py-3 w-10">
+                                            <input type="checkbox" class="rounded">
+                                        </th>
+                                        <th class="text-left text-sm font-medium text-slate-500 px-4 py-3">Application</th>
+                                        <th class="text-left text-sm font-medium text-slate-500 px-4 py-3">Student</th>
+                                        <th class="text-left text-sm font-medium text-slate-500 px-4 py-3">Program</th>
+                                        <th class="text-left text-sm font-medium text-slate-500 px-4 py-3">Documents</th>
+                                        <th class="text-left text-sm font-medium text-slate-500 px-4 py-3">Status</th>
+                                        <th class="text-left text-sm font-medium text-slate-500 px-4 py-3">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-t border-slate-100 hover:bg-slate-50">
+                                        <td class="px-4 py-4"><input type="checkbox" class="rounded"></td>
+                                        <td class="px-4 py-4">
+                                            <p class="font-medium text-slate-900">APP-2411-000156</p>
+                                            <p class="text-xs text-slate-500">Nov 20, 2024</p>
+                                        </td>
+                                        <td class="px-4 py-4">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center">
+                                                    <i class="fas fa-user text-slate-600 text-xs"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="font-medium text-slate-900">Priya Singh</p>
+                                                    <p class="text-xs text-slate-500">priya@email.com</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-4">
+                                            <p class="text-sm text-slate-900">IIT Delhi</p>
+                                            <p class="text-xs text-slate-500">M.Tech CS</p>
+                                        </td>
+                                        <td class="px-4 py-4">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
+                                                    <div class="h-full bg-yellow-500 rounded-full" style="width: 40%"></div>
+                                                </div>
+                                                <span class="text-xs text-slate-500">2/5</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-4">
+                                            <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs font-medium">Submitted</span>
+                                        </td>
+                                        <td class="px-4 py-4">
+                                            <div class="flex items-center gap-2">
+                                                <button class="px-3 py-1 bg-orange-600 text-white rounded text-sm hover:bg-orange-700">Review</button>
+                                                <button class="p-1 text-slate-400 hover:text-slate-600"><i class="fas fa-ellipsis-v"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-t border-slate-100 hover:bg-slate-50">
+                                        <td class="px-4 py-4"><input type="checkbox" class="rounded"></td>
+                                        <td class="px-4 py-4">
+                                            <p class="font-medium text-slate-900">APP-2411-000155</p>
+                                            <p class="text-xs text-slate-500">Nov 19, 2024</p>
+                                        </td>
+                                        <td class="px-4 py-4">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center">
+                                                    <i class="fas fa-user text-slate-600 text-xs"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="font-medium text-slate-900">Amit Kumar</p>
+                                                    <p class="text-xs text-slate-500">amit@email.com</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-4">
+                                            <p class="text-sm text-slate-900">IIT Bombay</p>
+                                            <p class="text-xs text-slate-500">MBA</p>
+                                        </td>
+                                        <td class="px-4 py-4">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
+                                                    <div class="h-full bg-green-500 rounded-full" style="width: 80%"></div>
+                                                </div>
+                                                <span class="text-xs text-slate-500">4/5</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-4">
+                                            <span class="px-3 py-1 bg-yellow-100 text-yellow-600 rounded-full text-xs font-medium">Under Review</span>
+                                        </td>
+                                        <td class="px-4 py-4">
+                                            <div class="flex items-center gap-2">
+                                                <button class="px-3 py-1 bg-orange-600 text-white rounded text-sm hover:bg-orange-700">Review</button>
+                                                <button class="p-1 text-slate-400 hover:text-slate-600"><i class="fas fa-ellipsis-v"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-t border-slate-100 hover:bg-slate-50">
+                                        <td class="px-4 py-4"><input type="checkbox" class="rounded"></td>
+                                        <td class="px-4 py-4">
+                                            <p class="font-medium text-slate-900">APP-2411-000154</p>
+                                            <p class="text-xs text-slate-500">Nov 18, 2024</p>
+                                        </td>
+                                        <td class="px-4 py-4">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center">
+                                                    <i class="fas fa-user text-slate-600 text-xs"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="font-medium text-slate-900">Neha Gupta</p>
+                                                    <p class="text-xs text-slate-500">neha@email.com</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-4">
+                                            <p class="text-sm text-slate-900">BITS Pilani</p>
+                                            <p class="text-xs text-slate-500">M.Tech DS</p>
+                                        </td>
+                                        <td class="px-4 py-4">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
+                                                    <div class="h-full bg-green-500 rounded-full" style="width: 60%"></div>
+                                                </div>
+                                                <span class="text-xs text-slate-500">3/5</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-4">
+                                            <span class="px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-xs font-medium">Docs Pending</span>
+                                        </td>
+                                        <td class="px-4 py-4">
+                                            <div class="flex items-center gap-2">
+                                                <button class="px-3 py-1 bg-orange-600 text-white rounded text-sm hover:bg-orange-700">Review</button>
+                                                <button class="p-1 text-slate-400 hover:text-slate-600"><i class="fas fa-ellipsis-v"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- Pagination -->
+                            <div class="px-4 py-3 border-t border-slate-200 flex items-center justify-between">
+                                <p class="text-sm text-slate-500">Showing 1-10 of 1,247 applications</p>
+                                <div class="flex items-center gap-2">
+                                    <button class="px-3 py-1 border border-slate-200 rounded text-sm text-slate-600 hover:bg-slate-50">Previous</button>
+                                    <button class="px-3 py-1 bg-orange-600 text-white rounded text-sm">1</button>
+                                    <button class="px-3 py-1 border border-slate-200 rounded text-sm text-slate-600 hover:bg-slate-50">2</button>
+                                    <button class="px-3 py-1 border border-slate-200 rounded text-sm text-slate-600 hover:bg-slate-50">3</button>
+                                    <button class="px-3 py-1 border border-slate-200 rounded text-sm text-slate-600 hover:bg-slate-50">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 3: APPLICATION REVIEW -->
+        <!-- ========================================== -->
+        <div id="app-review" class="screen">
+            <div class="flex min-h-screen">
+                <div class="w-64 bg-slate-900 text-white p-4 fixed h-full">
+                    <div class="flex items-center gap-3 mb-8 p-2">
+                        <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-xl"></i>
+                        </div>
+                        <div>
+                            <span class="text-xl font-bold">UniApply</span>
+                            <span class="text-xs text-slate-400 block">Admin Panel</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex-1 ml-64">
+                    <header class="bg-white border-b border-slate-200 px-6 py-4 sticky top-16">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-orange-600"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-slate-900">Dr. Sharma</p>
+                                <p class="text-xs text-slate-500">Super Admin</p>
+                            </div>
+                        </div>
+                    </header>
+                    
+                    <div class="p-6 space-y-6">
+                        <!-- Header -->
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <a href="#" class="text-slate-500 hover:text-slate-700 flex items-center gap-1 mb-2 text-sm">
+                                    <i class="fas fa-arrow-left"></i> Back to Applications
+                                </a>
+                                <div class="flex items-center gap-3">
+                                    <h1 class="text-2xl font-bold text-slate-900">APP-2411-000155</h1>
+                                    <span class="px-3 py-1 bg-yellow-100 text-yellow-600 rounded-full text-xs font-medium">Under Review</span>
+                                </div>
+                                <p class="text-slate-500">IIT Bombay - MBA</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="px-4 py-2 border border-red-200 text-red-600 rounded-lg text-sm font-medium hover:bg-red-50">
+                                    <i class="fas fa-times mr-2"></i>Reject
+                                </button>
+                                <button class="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700">
+                                    <i class="fas fa-check mr-2"></i>Approve
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-6">
+                            <!-- Main Content -->
+                            <div class="col-span-2 space-y-6">
+                                <!-- Student Information -->
+                                <div class="bg-white rounded-xl border border-slate-200 p-5">
+                                    <h2 class="text-lg font-semibold text-slate-900 mb-4">Student Information</h2>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-user text-slate-600 text-2xl"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-semibold text-slate-900 text-lg">Amit Kumar</p>
+                                                <p class="text-sm text-slate-500">amit@email.com</p>
+                                            </div>
+                                        </div>
+                                        <div class="space-y-2 text-sm">
+                                            <div class="flex items-center gap-2">
+                                                <i class="fas fa-phone text-slate-400 w-4"></i>
+                                                <span class="text-slate-600">+91 98765 43211</span>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <i class="fas fa-calendar text-slate-400 w-4"></i>
+                                                <span class="text-slate-600">DOB: May 15, 1999</span>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <i class="fas fa-map-marker-alt text-slate-400 w-4"></i>
+                                                <span class="text-slate-600">Mumbai, Maharashtra</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Documents Review -->
+                                <div class="bg-white rounded-xl border border-slate-200 p-5">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <h2 class="text-lg font-semibold text-slate-900">Documents Review</h2>
+                                        <button class="text-orange-600 text-sm font-medium hover:text-orange-700">
+                                            <i class="fas fa-plus mr-1"></i>Request Additional
+                                        </button>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <!-- Verified with AI Data -->
+                                        <div class="p-4 rounded-lg border border-green-200 bg-green-50">
+                                            <div class="flex items-start justify-between">
+                                                <div class="flex items-start gap-3">
+                                                    <i class="fas fa-file-alt text-green-600 mt-1"></i>
+                                                    <div>
+                                                        <p class="font-medium text-slate-900">10th Marksheet</p>
+                                                        <p class="text-xs text-slate-500">10th_marksheet.pdf</p>
+                                                        <!-- AI Extracted Data -->
+                                                        <div class="mt-2 p-2 bg-white rounded border border-green-200">
+                                                            <p class="text-xs text-slate-500 mb-1"><i class="fas fa-robot mr-1"></i> AI Extracted Data:</p>
+                                                            <div class="flex flex-wrap gap-2">
+                                                                <span class="text-xs bg-green-100 px-2 py-1 rounded">Name: <strong>Amit Kumar</strong></span>
+                                                                <span class="text-xs bg-green-100 px-2 py-1 rounded">Percentage: <strong>92%</strong></span>
+                                                                <span class="text-xs bg-green-100 px-2 py-1 rounded">Board: <strong>CBSE</strong></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center gap-2">
+                                                    <span class="flex items-center gap-1 text-green-600 text-sm">
+                                                        <i class="fas fa-check-circle"></i> Verified
+                                                    </span>
+                                                    <button class="p-2 text-slate-400 hover:text-slate-600"><i class="fas fa-eye"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Pending Verification -->
+                                        <div class="p-4 rounded-lg border border-yellow-200 bg-yellow-50">
+                                            <div class="flex items-start justify-between">
+                                                <div class="flex items-start gap-3">
+                                                    <i class="fas fa-file-alt text-yellow-600 mt-1"></i>
+                                                    <div>
+                                                        <p class="font-medium text-slate-900">Aadhar Card</p>
+                                                        <p class="text-xs text-slate-500">aadhar.pdf</p>
+                                                        <!-- AI Extracted Data -->
+                                                        <div class="mt-2 p-2 bg-white rounded border border-yellow-200">
+                                                            <p class="text-xs text-slate-500 mb-1"><i class="fas fa-robot mr-1"></i> AI Extracted Data:</p>
+                                                            <div class="flex flex-wrap gap-2">
+                                                                <span class="text-xs bg-yellow-100 px-2 py-1 rounded">Name: <strong>Amit Kumar</strong></span>
+                                                                <span class="text-xs bg-yellow-100 px-2 py-1 rounded">Number: <strong>****-****-4567</strong></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center gap-2">
+                                                    <button class="px-3 py-1 bg-green-600 text-white rounded text-xs hover:bg-green-700">Verify</button>
+                                                    <button class="px-3 py-1 bg-red-600 text-white rounded text-xs hover:bg-red-700">Reject</button>
+                                                    <button class="p-2 text-slate-400 hover:text-slate-600"><i class="fas fa-eye"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Missing Document -->
+                                        <div class="p-4 rounded-lg border border-slate-200 bg-slate-50">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-center gap-3">
+                                                    <i class="fas fa-file-alt text-slate-400"></i>
+                                                    <div>
+                                                        <p class="font-medium text-slate-900">Graduation Certificate</p>
+                                                        <p class="text-xs text-red-500">Not uploaded yet</p>
+                                                    </div>
+                                                </div>
+                                                <button class="px-3 py-1 border border-orange-600 text-orange-600 rounded text-xs hover:bg-orange-50">
+                                                    Request Upload
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!-- Rejected -->
+                                        <div class="p-4 rounded-lg border border-red-200 bg-red-50">
+                                            <div class="flex items-start justify-between">
+                                                <div class="flex items-start gap-3">
+                                                    <i class="fas fa-file-alt text-red-600 mt-1"></i>
+                                                    <div>
+                                                        <p class="font-medium text-slate-900">CAT Scorecard</p>
+                                                        <p class="text-xs text-slate-500">cat.pdf</p>
+                                                        <p class="text-xs text-red-600 mt-1"><i class="fas fa-exclamation-circle mr-1"></i>Rejected: Document is blurry</p>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center gap-2">
+                                                    <span class="text-red-600 text-xs"><i class="fas fa-times-circle mr-1"></i>Rejected</span>
+                                                    <button class="p-2 text-slate-400 hover:text-slate-600"><i class="fas fa-eye"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Internal Notes -->
+                                <div class="bg-white rounded-xl border border-slate-200 p-5">
+                                    <h2 class="text-lg font-semibold text-slate-900 mb-4">Internal Notes</h2>
+                                    <textarea placeholder="Add internal notes about this application..." class="w-full p-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" rows="3"></textarea>
+                                    <div class="flex justify-end mt-3">
+                                        <button class="px-4 py-2 bg-slate-900 text-white rounded-lg text-sm font-medium hover:bg-slate-800">
+                                            Save Note
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Sidebar -->
+                            <div class="space-y-6">
+                                <!-- Quick Actions -->
+                                <div class="bg-white rounded-xl border border-slate-200 p-5">
+                                    <h3 class="font-semibold text-slate-900 mb-4">Quick Actions</h3>
+                                    <div class="space-y-2">
+                                        <button class="w-full flex items-center gap-3 p-3 rounded-lg border border-slate-200 hover:bg-slate-50 text-left">
+                                            <i class="fas fa-envelope text-slate-600 w-5"></i>
+                                            <span class="text-sm text-slate-700">Email Student</span>
+                                        </button>
+                                        <button class="w-full flex items-center gap-3 p-3 rounded-lg border border-slate-200 hover:bg-slate-50 text-left">
+                                            <i class="fas fa-file-alt text-slate-600 w-5"></i>
+                                            <span class="text-sm text-slate-700">Request Document</span>
+                                        </button>
+                                        <button class="w-full flex items-center gap-3 p-3 rounded-lg border border-slate-200 hover:bg-slate-50 text-left">
+                                            <i class="fas fa-sync text-slate-600 w-5"></i>
+                                            <span class="text-sm text-slate-700">Change Status</span>
+                                        </button>
+                                        <button class="w-full flex items-center gap-3 p-3 rounded-lg border border-slate-200 hover:bg-slate-50 text-left">
+                                            <i class="fas fa-user-plus text-slate-600 w-5"></i>
+                                            <span class="text-sm text-slate-700">Assign POC</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Status History -->
+                                <div class="bg-white rounded-xl border border-slate-200 p-5">
+                                    <h3 class="font-semibold text-slate-900 mb-4">Status History</h3>
+                                    <div class="space-y-4">
+                                        <div class="flex gap-3">
+                                            <div class="flex flex-col items-center">
+                                                <div class="w-3 h-3 bg-orange-500 rounded-full"></div>
+                                                <div class="w-0.5 h-full bg-slate-200 mt-1"></div>
+                                            </div>
+                                            <div class="pb-4">
+                                                <p class="font-medium text-slate-900 text-sm">Under Review</p>
+                                                <p class="text-xs text-slate-500">Nov 19, 2024 2:15 PM</p>
+                                                <p class="text-xs text-slate-400">By: System</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex gap-3">
+                                            <div class="flex flex-col items-center">
+                                                <div class="w-3 h-3 bg-orange-500 rounded-full"></div>
+                                                <div class="w-0.5 h-full bg-slate-200 mt-1"></div>
+                                            </div>
+                                            <div class="pb-4">
+                                                <p class="font-medium text-slate-900 text-sm">Submitted</p>
+                                                <p class="text-xs text-slate-500">Nov 19, 2024 10:30 AM</p>
+                                                <p class="text-xs text-slate-400">By: Student</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Application Summary -->
+                                <div class="bg-white rounded-xl border border-slate-200 p-5">
+                                    <h3 class="font-semibold text-slate-900 mb-4">Summary</h3>
+                                    <div class="space-y-3 text-sm">
+                                        <div>
+                                            <p class="text-slate-400">Application Fee</p>
+                                            <p class="font-medium text-slate-700">₹5,000 <span class="text-green-600">(Paid)</span></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-slate-400">Submitted On</p>
+                                            <p class="font-medium text-slate-700">Nov 19, 2024</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-slate-400">Deadline</p>
+                                            <p class="font-medium text-slate-700">Dec 31, 2024</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-slate-400">Documents</p>
+                                            <p class="font-medium text-slate-700">4 of 6 verified</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 4: DOCUMENT CONFIGURATION -->
+        <!-- ========================================== -->
+        <div id="doc-config" class="screen">
+            <div class="flex min-h-screen">
+                <div class="w-64 bg-slate-900 text-white p-4 fixed h-full">
+                    <div class="flex items-center gap-3 mb-8 p-2">
+                        <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-xl"></i>
+                        </div>
+                        <div>
+                            <span class="text-xl font-bold">UniApply</span>
+                            <span class="text-xs text-slate-400 block">Admin Panel</span>
+                        </div>
+                    </div>
+                    <nav class="space-y-1">
+                        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800">
+                            <i class="fas fa-home w-5"></i><span>Dashboard</span>
+                        </a>
+                        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800">
+                            <i class="fas fa-file-alt w-5"></i><span>Applications</span>
+                        </a>
+                        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-orange-600 text-white">
+                            <i class="fas fa-file-check w-5"></i><span>Document Config</span>
+                        </a>
+                    </nav>
+                </div>
+                
+                <div class="flex-1 ml-64">
+                    <header class="bg-white border-b border-slate-200 px-6 py-4 sticky top-16">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-orange-600"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-slate-900">Dr. Sharma</p>
+                                <p class="text-xs text-slate-500">Super Admin</p>
+                            </div>
+                        </div>
+                    </header>
+                    
+                    <div class="p-6 space-y-6">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h1 class="text-2xl font-bold text-slate-900">Document Configuration</h1>
+                                <p class="text-slate-500">Configure document types, validation rules, and AI extraction fields</p>
+                            </div>
+                            <button class="bg-orange-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-orange-700 flex items-center gap-2">
+                                <i class="fas fa-plus"></i> Add Document Type
+                            </button>
+                        </div>
+
+                        <!-- Document Types -->
+                        <div class="space-y-4">
+                            <!-- Document Type 1 -->
+                            <div class="bg-white rounded-xl border border-slate-200 p-5">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex items-start gap-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-file-alt text-orange-600 text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-3 mb-1">
+                                                <h3 class="font-semibold text-slate-900">10th Marksheet</h3>
+                                                <span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded">10th_marksheet</span>
+                                            </div>
+                                            <div class="flex items-center gap-4 text-sm text-slate-500">
+                                                <span>Formats: PDF, JPG, PNG</span>
+                                                <span>Max Size: 5MB</span>
+                                                <span>Used in 12 programs</span>
+                                            </div>
+                                            <div class="mt-3">
+                                                <p class="text-xs text-slate-400 mb-2">AI Extraction Fields:</p>
+                                                <div class="flex flex-wrap gap-2">
+                                                    <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded">name</span>
+                                                    <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded">roll_number</span>
+                                                    <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded">percentage</span>
+                                                    <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded">board</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <button class="px-3 py-1 border border-slate-200 text-slate-600 rounded text-sm hover:bg-slate-50">View Sample</button>
+                                        <button class="px-3 py-1 border border-slate-200 text-slate-600 rounded text-sm hover:bg-slate-50"><i class="fas fa-edit"></i></button>
+                                        <button class="px-3 py-1 border border-red-200 text-red-600 rounded text-sm hover:bg-red-50"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Document Type 2 -->
+                            <div class="bg-white rounded-xl border border-slate-200 p-5">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex items-start gap-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-file-alt text-orange-600 text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-3 mb-1">
+                                                <h3 class="font-semibold text-slate-900">Aadhar Card</h3>
+                                                <span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded">aadhar_card</span>
+                                            </div>
+                                            <div class="flex items-center gap-4 text-sm text-slate-500">
+                                                <span>Formats: PDF, JPG, PNG</span>
+                                                <span>Max Size: 2MB</span>
+                                                <span>Used in 15 programs</span>
+                                            </div>
+                                            <div class="mt-3">
+                                                <p class="text-xs text-slate-400 mb-2">AI Extraction Fields:</p>
+                                                <div class="flex flex-wrap gap-2">
+                                                    <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded">name</span>
+                                                    <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded">aadhar_number</span>
+                                                    <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded">dob</span>
+                                                    <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded">address</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <button class="px-3 py-1 border border-slate-200 text-slate-600 rounded text-sm hover:bg-slate-50">View Sample</button>
+                                        <button class="px-3 py-1 border border-slate-200 text-slate-600 rounded text-sm hover:bg-slate-50"><i class="fas fa-edit"></i></button>
+                                        <button class="px-3 py-1 border border-red-200 text-red-600 rounded text-sm hover:bg-red-50"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Add Document Form -->
+                        <div class="bg-slate-50 rounded-xl border border-slate-200 p-6">
+                            <h3 class="font-semibold text-slate-900 mb-4">Add New Document Type</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-1">Document Name</label>
+                                    <input type="text" placeholder="e.g., Passport" class="w-full px-3 py-2 border border-slate-200 rounded-lg">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-1">Document Code</label>
+                                    <input type="text" placeholder="e.g., passport" class="w-full px-3 py-2 border border-slate-200 rounded-lg">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-1">Accepted Formats</label>
+                                    <select multiple class="w-full px-3 py-2 border border-slate-200 rounded-lg">
+                                        <option selected>PDF</option>
+                                        <option selected>JPG</option>
+                                        <option selected>PNG</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-1">Max File Size (MB)</label>
+                                    <input type="number" value="5" class="w-full px-3 py-2 border border-slate-200 rounded-lg">
+                                </div>
+                                <div class="col-span-2">
+                                    <label class="block text-sm font-medium text-slate-700 mb-1">Description</label>
+                                    <textarea placeholder="Document description and instructions" class="w-full px-3 py-2 border border-slate-200 rounded-lg" rows="2"></textarea>
+                                </div>
+                                <div class="col-span-2">
+                                    <label class="block text-sm font-medium text-slate-700 mb-1">AI Extraction Fields (comma separated)</label>
+                                    <input type="text" placeholder="name, number, expiry_date" class="w-full px-3 py-2 border border-slate-200 rounded-lg">
+                                </div>
+                                <div class="col-span-2">
+                                    <label class="block text-sm font-medium text-slate-700 mb-1">Upload Sample Document</label>
+                                    <div class="border-2 border-dashed border-slate-300 rounded-lg p-4 text-center">
+                                        <i class="fas fa-cloud-upload-alt text-slate-400 text-2xl mb-2"></i>
+                                        <p class="text-sm text-slate-500">Drag & drop or click to upload</p>
+                                    </div>
+                                </div>
+                                <div class="col-span-2">
+                                    <label class="block text-sm font-medium text-slate-700 mb-1">Validation Rules (JSON)</label>
+                                    <textarea placeholder='{"min_validity_months": 6}' class="w-full px-3 py-2 border border-slate-200 rounded-lg font-mono text-sm" rows="2"></textarea>
+                                </div>
+                                <div class="col-span-2 flex justify-end gap-3">
+                                    <button class="px-4 py-2 border border-slate-200 text-slate-600 rounded-lg font-medium hover:bg-slate-100">Cancel</button>
+                                    <button class="px-4 py-2 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700">Save Document Type</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 5: SUPPORT TICKETS -->
+        <!-- ========================================== -->
+        <div id="tickets" class="screen">
+            <div class="flex min-h-screen">
+                <div class="w-64 bg-slate-900 text-white p-4 fixed h-full">
+                    <div class="flex items-center gap-3 mb-8 p-2">
+                        <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-xl"></i>
+                        </div>
+                        <div>
+                            <span class="text-xl font-bold">UniApply</span>
+                            <span class="text-xs text-slate-400 block">Admin Panel</span>
+                        </div>
+                    </div>
+                    <nav class="space-y-1">
+                        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800">
+                            <i class="fas fa-home w-5"></i><span>Dashboard</span>
+                        </a>
+                        <a href="#" class="flex items-center justify-between px-4 py-3 rounded-lg bg-orange-600 text-white">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-comments w-5"></i><span>Support Tickets</span>
+                            </div>
+                            <span class="bg-white/20 text-xs px-2 py-0.5 rounded-full">5</span>
+                        </a>
+                    </nav>
+                </div>
+                
+                <div class="flex-1 ml-64">
+                    <header class="bg-white border-b border-slate-200 px-6 py-4 sticky top-16">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-orange-600"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-slate-900">Dr. Sharma</p>
+                                <p class="text-xs text-slate-500">Super Admin</p>
+                            </div>
+                        </div>
+                    </header>
+                    
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <div>
+                                <h1 class="text-2xl font-bold text-slate-900">Support Tickets</h1>
+                                <p class="text-slate-500">Manage and respond to student support requests</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-6" style="height: calc(100vh - 250px)">
+                            <!-- Tickets List -->
+                            <div class="bg-white rounded-xl border border-slate-200 overflow-hidden flex flex-col">
+                                <div class="p-4 border-b border-slate-200">
+                                    <div class="relative mb-3">
+                                        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                        <input type="text" placeholder="Search tickets..." class="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg text-sm">
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <button class="px-3 py-1 bg-orange-600 text-white rounded text-xs">All</button>
+                                        <button class="px-3 py-1 bg-slate-100 text-slate-600 rounded text-xs">Open</button>
+                                        <button class="px-3 py-1 bg-slate-100 text-slate-600 rounded text-xs">Urgent</button>
+                                    </div>
+                                </div>
+                                <div class="flex-1 overflow-y-auto">
+                                    <!-- Ticket 1 - Selected -->
+                                    <div class="p-4 border-b border-slate-100 bg-orange-50 cursor-pointer">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-xs text-slate-400">TKT-001</span>
+                                            <span class="px-2 py-0.5 text-xs rounded-full bg-red-100 text-red-600">urgent</span>
+                                        </div>
+                                        <p class="font-medium text-slate-900 text-sm mb-1">Payment failed but amount debited</p>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-xs text-slate-500">Amit Kumar</span>
+                                            <span class="px-2 py-0.5 text-xs rounded-full bg-yellow-100 text-yellow-600">In Progress</span>
+                                        </div>
+                                    </div>
+                                    <!-- Ticket 2 -->
+                                    <div class="p-4 border-b border-slate-100 hover:bg-slate-50 cursor-pointer">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-xs text-slate-400">TKT-002</span>
+                                            <span class="px-2 py-0.5 text-xs rounded-full bg-orange-100 text-orange-600">high</span>
+                                        </div>
+                                        <p class="font-medium text-slate-900 text-sm mb-1">Document verification delayed</p>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-xs text-slate-500">Priya Singh</span>
+                                            <span class="px-2 py-0.5 text-xs rounded-full bg-blue-100 text-blue-600">Open</span>
+                                        </div>
+                                    </div>
+                                    <!-- Ticket 3 -->
+                                    <div class="p-4 border-b border-slate-100 hover:bg-slate-50 cursor-pointer">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-xs text-slate-400">TKT-003</span>
+                                            <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 text-slate-600">low</span>
+                                        </div>
+                                        <p class="font-medium text-slate-900 text-sm mb-1">Question about eligibility</p>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-xs text-slate-500">Rahul Sharma</span>
+                                            <span class="px-2 py-0.5 text-xs rounded-full bg-green-100 text-green-600">Resolved</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Chat Area -->
+                            <div class="col-span-2 bg-white rounded-xl border border-slate-200 flex flex-col">
+                                <!-- Ticket Header -->
+                                <div class="p-4 border-b border-slate-200">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <h3 class="font-semibold text-slate-900">Payment failed but amount debited</h3>
+                                                <span class="px-2 py-0.5 text-xs rounded-full bg-yellow-100 text-yellow-600">In Progress</span>
+                                            </div>
+                                            <div class="flex items-center gap-4 text-sm text-slate-500">
+                                                <span>Amit Kumar</span>
+                                                <span>Nov 19, 2024</span>
+                                                <span class="text-orange-600">Linked: APP-2411-000155</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex gap-2">
+                                            <select class="px-3 py-1 border border-slate-200 rounded text-sm">
+                                                <option>Change Status</option>
+                                                <option>Open</option>
+                                                <option>In Progress</option>
+                                                <option>Resolved</option>
+                                            </select>
+                                            <select class="px-3 py-1 border border-slate-200 rounded text-sm">
+                                                <option>Assign To</option>
+                                                <option>Dr. Sharma</option>
+                                                <option>Ms. Gupta</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Messages -->
+                                <div class="flex-1 overflow-y-auto p-4 space-y-4">
+                                    <!-- Student Message -->
+                                    <div class="flex justify-start">
+                                        <div class="max-w-md bg-slate-100 rounded-lg p-3">
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <span class="text-xs font-medium text-slate-600">Amit Kumar</span>
+                                                <span class="text-xs text-slate-400">Nov 19, 10:30 AM</span>
+                                            </div>
+                                            <p class="text-sm text-slate-900">Hi, I tried to pay for my application but the payment failed. However, the amount ₹5,000 was debited from my account. Please help!</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Admin Message -->
+                                    <div class="flex justify-end">
+                                        <div class="max-w-md bg-orange-600 text-white rounded-lg p-3">
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <span class="text-xs font-medium text-orange-200">Support Team</span>
+                                                <span class="text-xs text-orange-200">Nov 19, 11:15 AM</span>
+                                            </div>
+                                            <p class="text-sm">Hello Amit, thank you for reaching out. I'm sorry to hear about this issue. Let me check your transaction details.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Admin Message -->
+                                    <div class="flex justify-end">
+                                        <div class="max-w-md bg-orange-600 text-white rounded-lg p-3">
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <span class="text-xs font-medium text-orange-200">Support Team</span>
+                                                <span class="text-xs text-orange-200">Nov 19, 11:20 AM</span>
+                                            </div>
+                                            <p class="text-sm">I've verified your transaction. The payment was stuck in pending status. I've initiated the refund which should reflect in 3-5 business days. You can retry the payment now.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Student Message -->
+                                    <div class="flex justify-start">
+                                        <div class="max-w-md bg-slate-100 rounded-lg p-3">
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <span class="text-xs font-medium text-slate-600">Amit Kumar</span>
+                                                <span class="text-xs text-slate-400">Nov 19, 11:45 AM</span>
+                                            </div>
+                                            <p class="text-sm text-slate-900">Thank you so much for the quick response! I'll retry the payment now.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Reply Input -->
+                                <div class="p-4 border-t border-slate-200">
+                                    <div class="flex items-end gap-3">
+                                        <div class="flex-1">
+                                            <textarea placeholder="Type your reply..." class="w-full px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 resize-none" rows="2"></textarea>
+                                        </div>
+                                        <div class="flex gap-2">
+                                            <button class="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded">
+                                                <i class="fas fa-paperclip"></i>
+                                            </button>
+                                            <button class="px-4 py-2 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 flex items-center gap-2">
+                                                <i class="fas fa-paper-plane"></i> Send
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-4 mt-2">
+                                        <label class="flex items-center gap-2 text-sm text-slate-500">
+                                            <input type="checkbox" class="rounded">
+                                            Internal note (not visible to student)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 6: FAQ MANAGEMENT -->
+        <!-- ========================================== -->
+        <div id="faqs" class="screen">
+            <div class="flex min-h-screen">
+                <div class="w-64 bg-slate-900 text-white p-4 fixed h-full">
+                    <div class="flex items-center gap-3 mb-8 p-2">
+                        <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-xl"></i>
+                        </div>
+                        <div>
+                            <span class="text-xl font-bold">UniApply</span>
+                            <span class="text-xs text-slate-400 block">Admin Panel</span>
+                        </div>
+                    </div>
+                    <nav class="space-y-1">
+                        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800">
+                            <i class="fas fa-home w-5"></i><span>Dashboard</span>
+                        </a>
+                        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-orange-600 text-white">
+                            <i class="fas fa-question-circle w-5"></i><span>FAQs</span>
+                        </a>
+                    </nav>
+                </div>
+                
+                <div class="flex-1 ml-64">
+                    <header class="bg-white border-b border-slate-200 px-6 py-4 sticky top-16">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-orange-600"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-slate-900">Dr. Sharma</p>
+                                <p class="text-xs text-slate-500">Super Admin</p>
+                            </div>
+                        </div>
+                    </header>
+                    
+                    <div class="p-6 space-y-6">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h1 class="text-2xl font-bold text-slate-900">FAQ Management</h1>
+                                <p class="text-slate-500">Manage frequently asked questions</p>
+                            </div>
+                            <button class="bg-orange-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-orange-700 flex items-center gap-2">
+                                <i class="fas fa-plus"></i> Add FAQ
+                            </button>
+                        </div>
+
+                        <div class="bg-white rounded-xl border border-slate-200">
+                            <div class="p-4 border-b border-slate-200 flex gap-2">
+                                <button class="px-4 py-2 bg-orange-600 text-white rounded-lg text-sm font-medium">All</button>
+                                <button class="px-4 py-2 bg-slate-100 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-200">Applications</button>
+                                <button class="px-4 py-2 bg-slate-100 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-200">Payments</button>
+                                <button class="px-4 py-2 bg-slate-100 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-200">Documents</button>
+                                <button class="px-4 py-2 bg-slate-100 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-200">Refunds</button>
+                            </div>
+                            <div class="divide-y divide-slate-100">
+                                <!-- FAQ 1 -->
+                                <div class="p-4">
+                                    <div class="flex items-start justify-between">
+                                        <div class="flex-1">
+                                            <div class="flex items-center gap-2 mb-2">
+                                                <span class="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded">Applications</span>
+                                            </div>
+                                            <h3 class="font-medium text-slate-900 mb-1">How long does document verification take?</h3>
+                                            <p class="text-sm text-slate-500 line-clamp-2">Document verification typically takes 2-3 business days. During peak application periods, it may take up to 5 business days...</p>
+                                            <div class="flex items-center gap-4 mt-2 text-xs text-slate-400">
+                                                <span><i class="fas fa-eye mr-1"></i> 1,245 views</span>
+                                                <span><i class="fas fa-thumbs-up mr-1"></i> 892 found helpful</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <button class="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded"><i class="fas fa-edit"></i></button>
+                                            <button class="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- FAQ 2 -->
+                                <div class="p-4">
+                                    <div class="flex items-start justify-between">
+                                        <div class="flex-1">
+                                            <div class="flex items-center gap-2 mb-2">
+                                                <span class="text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded">Payments</span>
+                                            </div>
+                                            <h3 class="font-medium text-slate-900 mb-1">What payment methods are accepted?</h3>
+                                            <p class="text-sm text-slate-500 line-clamp-2">We accept UPI, Credit/Debit Cards, Net Banking from all major Indian banks...</p>
+                                            <div class="flex items-center gap-4 mt-2 text-xs text-slate-400">
+                                                <span><i class="fas fa-eye mr-1"></i> 987 views</span>
+                                                <span><i class="fas fa-thumbs-up mr-1"></i> 756 found helpful</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <button class="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded"><i class="fas fa-edit"></i></button>
+                                            <button class="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- FAQ 3 -->
+                                <div class="p-4">
+                                    <div class="flex items-start justify-between">
+                                        <div class="flex-1">
+                                            <div class="flex items-center gap-2 mb-2">
+                                                <span class="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded">Documents</span>
+                                            </div>
+                                            <h3 class="font-medium text-slate-900 mb-1">What documents are required for application?</h3>
+                                            <p class="text-sm text-slate-500 line-clamp-2">Required documents vary by program but typically include 10th & 12th marksheets, Aadhar Card, PAN Card, Graduation Certificate...</p>
+                                            <div class="flex items-center gap-4 mt-2 text-xs text-slate-400">
+                                                <span><i class="fas fa-eye mr-1"></i> 2,341 views</span>
+                                                <span><i class="fas fa-thumbs-up mr-1"></i> 1,890 found helpful</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <button class="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded"><i class="fas fa-edit"></i></button>
+                                            <button class="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 7: REFUNDS -->
+        <!-- ========================================== -->
+        <div id="refunds" class="screen">
+            <div class="flex min-h-screen">
+                <div class="w-64 bg-slate-900 text-white p-4 fixed h-full">
+                    <div class="flex items-center gap-3 mb-8 p-2">
+                        <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-xl"></i>
+                        </div>
+                        <div>
+                            <span class="text-xl font-bold">UniApply</span>
+                            <span class="text-xs text-slate-400 block">Admin Panel</span>
+                        </div>
+                    </div>
+                    <nav class="space-y-1">
+                        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800">
+                            <i class="fas fa-home w-5"></i><span>Dashboard</span>
+                        </a>
+                        <a href="#" class="flex items-center justify-between px-4 py-3 rounded-lg bg-orange-600 text-white">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-undo w-5"></i><span>Refunds</span>
+                            </div>
+                            <span class="bg-white/20 text-xs px-2 py-0.5 rounded-full">3</span>
+                        </a>
+                    </nav>
+                </div>
+                
+                <div class="flex-1 ml-64">
+                    <header class="bg-white border-b border-slate-200 px-6 py-4 sticky top-16">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-orange-600"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-slate-900">Dr. Sharma</p>
+                                <p class="text-xs text-slate-500">Super Admin</p>
+                            </div>
+                        </div>
+                    </header>
+                    
+                    <div class="p-6 space-y-6">
+                        <div>
+                            <h1 class="text-2xl font-bold text-slate-900">Refund Requests</h1>
+                            <p class="text-slate-500">Manage refund requests from students</p>
+                        </div>
+
+                        <!-- Stats -->
+                        <div class="grid grid-cols-4 gap-4">
+                            <div class="bg-white rounded-xl p-5 border border-slate-200">
+                                <p class="text-sm text-slate-500 mb-1">Pending</p>
+                                <p class="text-2xl font-bold text-orange-600">3</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-5 border border-slate-200">
+                                <p class="text-sm text-slate-500 mb-1">Approved</p>
+                                <p class="text-2xl font-bold text-green-600">12</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-5 border border-slate-200">
+                                <p class="text-sm text-slate-500 mb-1">Rejected</p>
+                                <p class="text-2xl font-bold text-red-600">2</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-5 border border-slate-200">
+                                <p class="text-sm text-slate-500 mb-1">Total Amount</p>
+                                <p class="text-2xl font-bold text-slate-900">₹45,000</p>
+                            </div>
+                        </div>
+
+                        <!-- Refund Table -->
+                        <div class="bg-white rounded-xl border border-slate-200">
+                            <div class="p-4 border-b border-slate-200 flex justify-between items-center">
+                                <div class="flex gap-2">
+                                    <button class="px-4 py-2 bg-orange-600 text-white rounded-lg text-sm font-medium">All (17)</button>
+                                    <button class="px-4 py-2 bg-slate-100 text-slate-600 rounded-lg text-sm font-medium">Pending (3)</button>
+                                    <button class="px-4 py-2 bg-slate-100 text-slate-600 rounded-lg text-sm font-medium">Approved (12)</button>
+                                    <button class="px-4 py-2 bg-slate-100 text-slate-600 rounded-lg text-sm font-medium">Rejected (2)</button>
+                                </div>
+                            </div>
+                            <table class="w-full">
+                                <thead class="bg-slate-50">
+                                    <tr>
+                                        <th class="text-left text-sm font-medium text-slate-500 px-4 py-3">Request ID</th>
+                                        <th class="text-left text-sm font-medium text-slate-500 px-4 py-3">Student</th>
+                                        <th class="text-left text-sm font-medium text-slate-500 px-4 py-3">Application</th>
+                                        <th class="text-left text-sm font-medium text-slate-500 px-4 py-3">Amount</th>
+                                        <th class="text-left text-sm font-medium text-slate-500 px-4 py-3">Reason</th>
+                                        <th class="text-left text-sm font-medium text-slate-500 px-4 py-3">Status</th>
+                                        <th class="text-left text-sm font-medium text-slate-500 px-4 py-3">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-t border-slate-100">
+                                        <td class="px-4 py-4 text-sm font-mono text-slate-900">REF-001</td>
+                                        <td class="px-4 py-4">
+                                            <p class="text-sm font-medium text-slate-900">Priya Singh</p>
+                                            <p class="text-xs text-slate-500">priya@email.com</p>
+                                        </td>
+                                        <td class="px-4 py-4 text-sm text-slate-600">APP-2411-000150</td>
+                                        <td class="px-4 py-4 text-sm font-medium text-slate-900">₹3,000</td>
+                                        <td class="px-4 py-4 text-sm text-slate-500">Duplicate payment</td>
+                                        <td class="px-4 py-4"><span class="px-2 py-1 bg-yellow-100 text-yellow-600 text-xs rounded-full">Pending</span></td>
+                                        <td class="px-4 py-4">
+                                            <div class="flex gap-2">
+                                                <button class="px-2 py-1 bg-green-600 text-white rounded text-xs hover:bg-green-700">Approve</button>
+                                                <button class="px-2 py-1 bg-red-600 text-white rounded text-xs hover:bg-red-700">Reject</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-t border-slate-100">
+                                        <td class="px-4 py-4 text-sm font-mono text-slate-900">REF-002</td>
+                                        <td class="px-4 py-4">
+                                            <p class="text-sm font-medium text-slate-900">Rahul Sharma</p>
+                                            <p class="text-xs text-slate-500">rahul@email.com</p>
+                                        </td>
+                                        <td class="px-4 py-4 text-sm text-slate-600">APP-2411-000145</td>
+                                        <td class="px-4 py-4 text-sm font-medium text-slate-900">₹2,500</td>
+                                        <td class="px-4 py-4 text-sm text-slate-500">Application withdrawn</td>
+                                        <td class="px-4 py-4"><span class="px-2 py-1 bg-yellow-100 text-yellow-600 text-xs rounded-full">Pending</span></td>
+                                        <td class="px-4 py-4">
+                                            <div class="flex gap-2">
+                                                <button class="px-2 py-1 bg-green-600 text-white rounded text-xs hover:bg-green-700">Approve</button>
+                                                <button class="px-2 py-1 bg-red-600 text-white rounded text-xs hover:bg-red-700">Reject</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-t border-slate-100">
+                                        <td class="px-4 py-4 text-sm font-mono text-slate-900">REF-003</td>
+                                        <td class="px-4 py-4">
+                                            <p class="text-sm font-medium text-slate-900">Neha Gupta</p>
+                                            <p class="text-xs text-slate-500">neha@email.com</p>
+                                        </td>
+                                        <td class="px-4 py-4 text-sm text-slate-600">APP-2411-000140</td>
+                                        <td class="px-4 py-4 text-sm font-medium text-slate-900">₹3,500</td>
+                                        <td class="px-4 py-4 text-sm text-slate-500">Program cancelled</td>
+                                        <td class="px-4 py-4"><span class="px-2 py-1 bg-green-100 text-green-600 text-xs rounded-full">Approved</span></td>
+                                        <td class="px-4 py-4">
+                                            <button class="text-blue-600 text-sm hover:text-blue-700">View Details</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            
+            document.querySelectorAll('[onclick^="showScreen"]').forEach(btn => {
+                btn.classList.remove('bg-orange-600');
+                btn.classList.add('bg-slate-700');
+            });
+            event.target.classList.remove('bg-slate-700');
+            event.target.classList.add('bg-orange-600');
+        }
+    </script>
+</body>
+</html>

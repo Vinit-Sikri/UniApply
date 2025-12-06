@@ -1,0 +1,270 @@
+.mock-razorpay-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.2s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.mock-razorpay-modal {
+  background: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 420px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.mock-razorpay-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.mock-razorpay-logo {
+  display: flex;
+  align-items: center;
+}
+
+.mock-razorpay-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.mock-razorpay-close:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.mock-razorpay-content {
+  padding: 24px;
+}
+
+.mock-razorpay-merchant {
+  margin-bottom: 24px;
+}
+
+.mock-razorpay-merchant-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.mock-razorpay-merchant-desc {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.mock-razorpay-amount {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.mock-razorpay-amount-label {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.mock-razorpay-amount-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.mock-razorpay-form {
+  margin-bottom: 24px;
+}
+
+.mock-razorpay-field {
+  margin-bottom: 20px;
+}
+
+.mock-razorpay-field label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.mock-razorpay-field input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+
+.mock-razorpay-field input:focus {
+  outline: none;
+  border-color: #3395FF;
+  box-shadow: 0 0 0 3px rgba(51, 149, 255, 0.1);
+}
+
+.mock-razorpay-field input.error {
+  border-color: #ef4444;
+}
+
+.mock-razorpay-field input:disabled {
+  background: #f3f4f6;
+  cursor: not-allowed;
+}
+
+.mock-razorpay-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.error-text {
+  display: block;
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.mock-razorpay-pay-button {
+  width: 100%;
+  background: #3395FF;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.mock-razorpay-pay-button:hover:not(:disabled) {
+  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(51, 149, 255, 0.3);
+}
+
+.mock-razorpay-pay-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.mock-razorpay-pay-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mock-razorpay-footer {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 20px;
+}
+
+.mock-razorpay-security {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 16px;
+  justify-content: center;
+}
+
+.mock-razorpay-payment-methods {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.mock-razorpay-icons {
+  display: flex;
+  gap: 4px;
+}
+
+.mock-razorpay-icons span {
+  font-size: 20px;
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+  .mock-razorpay-modal {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+    max-height: 100vh;
+  }
+
+  .mock-razorpay-field-row {
+    grid-template-columns: 1fr;
+  }
+}
+
