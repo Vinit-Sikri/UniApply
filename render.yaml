@@ -1,0 +1,70 @@
+services:
+  # Backend API Service
+  - type: web
+    name: uniapply-backend
+    env: node
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DB_HOST
+        fromDatabase:
+          name: uniapply-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: uniapply-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: uniapply-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: uniapply-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: uniapply-db
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRE
+        value: 7d
+      - key: FRONTEND_URL
+        fromService:
+          type: web
+          name: uniapply-frontend
+          property: host
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+
+  # Frontend Web Service
+  - type: web
+    name: uniapply-frontend
+    env: node
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    startCommand: cd frontend && npm run preview
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: uniapply-backend
+          property: host
+
+  # PostgreSQL Database
+  - type: pspg
+    name: uniapply-db
+    plan: free
+    databaseName: uniapply_db
+    user: uniapply_user
+

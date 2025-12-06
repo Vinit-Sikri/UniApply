@@ -147,6 +147,11 @@ async function startServer() {
       console.log('🔄 Synchronizing database models...');
       await sequelize.sync({ force: false, alter: true });
       console.log('✅ Database models synchronized.');
+    } else {
+      // In production, sync without force
+      console.log('🔄 Synchronizing database models for production...');
+      await sequelize.sync({ alter: true });
+      console.log('✅ Database models synchronized.');
     }
     
     app.listen(PORT, () => {
