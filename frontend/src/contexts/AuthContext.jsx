@@ -60,6 +60,31 @@ export function AuthProvider({ children }) {
       toast.success('Registration successful')
       return response.data
     } catch (error) {
+      // Handle network errors
+      if (!error.response) {
+        const apiUrl = import.meta.env.VITE_API_URL || '/api'
+        console.error('Network Error Details:', {
+          message: error.message,
+          code: error.code,
+          apiUrl: apiUrl,
+          userMessage: error.userMessage
+        })
+        
+        let errorMessage = 'Network error. ';
+        if (error.message === 'Network Error' || error.code === 'ERR_NETWORK') {
+          errorMessage += 'Unable to connect to the server. ';
+          errorMessage += 'Please check:\n';
+          errorMessage += '1. Backend server is running\n';
+          errorMessage += '2. API URL is correct\n';
+          errorMessage += '3. Internet connection is active';
+        } else {
+          errorMessage += error.message || 'Please try again later.'
+        }
+        
+        toast.error(errorMessage, { duration: 6000 })
+        throw error
+      }
+      
       // Handle validation errors
       if (error.response?.data?.errors) {
         const errorMessages = error.response.data.errors.map(err => err.message || err.msg).join(', ')
@@ -68,10 +93,8 @@ export function AuthProvider({ children }) {
         toast.error(error.response.data.error)
       } else if (error.response?.data?.message) {
         toast.error(error.response.data.message)
-      } else if (error.message) {
-        toast.error(error.message)
       } else {
-        toast.error('Registration failed. Please check your connection and try again.')
+        toast.error('Registration failed. Please try again.')
       }
       console.error('Registration error:', error.response?.data || error)
       throw error

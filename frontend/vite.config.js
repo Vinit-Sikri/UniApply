@@ -18,4 +18,9 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: false,
   },
+  // Preview server configuration for SPA routing
+  preview: {
+    port: 3000,
+    strictPort: true,
+  },
 })
