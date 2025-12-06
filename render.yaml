@@ -62,7 +62,7 @@ services:
           property: host
 
   # PostgreSQL Database
-  - type: pspg
+  - type: pg
     name: uniapply-db
     plan: free
     databaseName: uniapply_db
