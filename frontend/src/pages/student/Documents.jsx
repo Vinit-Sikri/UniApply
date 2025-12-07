@@ -150,10 +150,10 @@ export default function StudentDocuments() {
               to="/documents/upload-wizard"
               className="btn-primary inline-block"
             >
-              <i className="fas fa-magic mr-2"></i>
-              Start Guided Upload
+              <i className="fas fa-upload mr-2"></i>
+              Quick Upload
             </Link>
-            <label className="btn-secondary inline-block cursor-pointer">
+            {/* <label className="btn-secondary inline-block cursor-pointer">
               <i className="fas fa-upload mr-2"></i>
               Quick Upload
               <input
@@ -162,7 +162,7 @@ export default function StudentDocuments() {
                 onChange={handleFileUpload}
                 accept=".pdf,.jpg,.jpeg,.png"
               />
-            </label>
+            </label> */}
           </div>
         </div>
       )}
