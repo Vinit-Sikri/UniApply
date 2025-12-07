@@ -263,9 +263,9 @@ router.post('/create-order', authenticate, async (req, res, next) => {
 
     // Create payment record
     // Generate transaction ID (required field)
-    const timestamp = Date.now();
+    const txnTimestamp = Date.now();
     const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
-    const transactionId = `TXN-${timestamp}-${random}`;
+    const transactionId = `TXN-${txnTimestamp}-${random}`;
     
     let payment;
     try {
