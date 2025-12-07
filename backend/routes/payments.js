@@ -186,6 +186,9 @@ router.post('/create-order', authenticate, async (req, res, next) => {
     if (isNaN(paymentAmount) || paymentAmount <= 0) {
       return res.status(400).json({ error: 'Invalid payment amount' });
     }
+    
+    // Ensure amount is properly formatted for DECIMAL(10, 2)
+    const formattedAmount = Math.round(paymentAmount * 100) / 100; // Round to 2 decimal places
 
     // Check if Razorpay is configured
     if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
@@ -263,8 +266,9 @@ router.post('/create-order', authenticate, async (req, res, next) => {
     try {
       payment = await Payment.create({
         userId: req.user.id,
-        applicationId,
-        amount: paymentAmount,
+        applicationId: applicationId || null,
+        amount: formattedAmount,
+        currency: 'INR',
         paymentMethod: 'razorpay',
         paymentType,
         status: 'pending',
@@ -273,9 +277,30 @@ router.post('/create-order', authenticate, async (req, res, next) => {
       });
     } catch (dbError) {
       console.error('Payment record creation error:', dbError);
+      console.error('Payment record creation error details:', {
+        name: dbError.name,
+        message: dbError.message,
+        errors: dbError.errors,
+        fields: dbError.fields,
+        stack: dbError.stack
+      });
+      
+      // Provide more detailed error message
+      let errorMessage = 'Payment order was created but record failed. Please contact support.';
+      if (dbError.errors && dbError.errors.length > 0) {
+        errorMessage = dbError.errors.map(e => e.message).join(', ');
+      } else if (dbError.message) {
+        errorMessage = dbError.message;
+      }
+      
       return res.status(500).json({ 
         error: 'Failed to create payment record',
-        message: 'Payment order was created but record failed. Please contact support.'
+        message: errorMessage,
+        details: process.env.NODE_ENV === 'development' ? {
+          name: dbError.name,
+          message: dbError.message,
+          errors: dbError.errors
+        } : undefined
       });
     }
 

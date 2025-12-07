@@ -143,7 +143,15 @@ export default function PaymentPage() {
             })
           } catch (error) {
             console.error('Payment verification error:', error)
-            toast.error('Payment verification failed. Please contact support.')
+            console.error('Verification error response:', error.response?.data)
+            
+            const errorMessage = error.response?.data?.message 
+              || error.response?.data?.error 
+              || 'Payment verification failed. Please contact support.'
+            
+            toast.error(errorMessage, {
+              duration: 5000
+            })
           }
         },
         prefill: {
@@ -173,7 +181,17 @@ export default function PaymentPage() {
     } catch (error) {
       setProcessing(false)
       console.error('Payment initiation error:', error)
-      toast.error(error.response?.data?.error || error.response?.data?.message || 'Failed to initiate payment')
+      console.error('Error response:', error.response?.data)
+      
+      // Show detailed error message
+      const errorMessage = error.response?.data?.message 
+        || error.response?.data?.error 
+        || error.message 
+        || 'Failed to initiate payment'
+      
+      toast.error(errorMessage, {
+        duration: 5000
+      })
     }
   }
 
