@@ -3,7 +3,6 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 import api from '../../utils/api'
 import toast from 'react-hot-toast'
-import MockRazorpayCheckout from '../../components/MockRazorpayCheckout'
 
 export default function PaymentPage() {
   const { applicationId } = useParams()
@@ -12,8 +11,8 @@ export default function PaymentPage() {
   const paymentType = location.state?.paymentType || 'application_fee'
   const queryClient = useQueryClient()
   
-  const [showMockCheckout, setShowMockCheckout] = useState(false)
   const [processing, setProcessing] = useState(false)
+  const [razorpayLoaded, setRazorpayLoaded] = useState(false)
 
   const { data: applicationData } = useQuery(
     ['application', applicationId],
@@ -22,6 +21,28 @@ export default function PaymentPage() {
   )
 
   const application = applicationData
+
+  // Load Razorpay script
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js'
+    script.async = true
+    script.onload = () => {
+      setRazorpayLoaded(true)
+    }
+    script.onerror = () => {
+      toast.error('Failed to load Razorpay. Please refresh the page.')
+    }
+    document.body.appendChild(script)
+
+    return () => {
+      // Cleanup script on unmount
+      const existingScript = document.querySelector('script[src="https://checkout.razorpay.com/v1/checkout.js"]')
+      if (existingScript) {
+        document.body.removeChild(existingScript)
+      }
+    }
+  }, [])
 
   // Debug log
   useEffect(() => {
@@ -56,6 +77,11 @@ export default function PaymentPage() {
       return
     }
 
+    if (!razorpayLoaded) {
+      toast.error('Payment gateway is loading. Please wait...')
+      return
+    }
+
     // Validate application status before payment
     if (paymentType === 'application_fee' && application.status !== 'verified') {
       toast.error('Application must be verified before making payment. Current status: ' + application.status, {
@@ -84,61 +110,73 @@ export default function PaymentPage() {
       return
     }
 
-    // Show mock Razorpay checkout (for demo purposes)
-    setShowMockCheckout(true)
-  }
+    setProcessing(true)
 
-  const handleMockPaymentSuccess = async (mockResponse) => {
     try {
-      // Create a mock payment record
-      const paymentData = {
+      // Create payment order
+      const response = await api.post('/payments/create-order', {
         applicationId: application.id,
-        amount: paymentType === 'application_fee' 
-          ? parseFloat(application.university?.applicationFee || 0)
-          : 500,
-        paymentMethod: 'razorpay',
-        paymentType: paymentType,
-        status: 'completed',
-        gatewayTransactionId: mockResponse.razorpay_payment_id,
-        paidAt: new Date()
-      }
+        amount: amount,
+        paymentType: paymentType
+      })
 
-      // Try to create payment record (if backend supports it)
-      try {
-        await api.post('/payments', paymentData)
-      } catch (err) {
-        console.log('Payment record creation skipped:', err.message)
-      }
+      const { orderId, key, paymentId } = response.data
 
-      // Update application status
-      try {
-        if (paymentType === 'application_fee') {
-          await api.put(`/applications/${application.id}`, { status: 'payment_received' })
-        } else if (paymentType === 'issue_resolution_fee') {
-          await api.put(`/applications/${application.id}`, { 
-            status: 'under_review',
-            issueResolvedAt: new Date()
-          })
+      // Initialize Razorpay checkout
+      const options = {
+        key: key,
+        amount: response.data.amount, // Amount in paise
+        currency: response.data.currency || 'INR',
+        name: 'UniApply',
+        description: paymentType === 'application_fee' 
+          ? `Application Fee for ${application.university?.name}`
+          : 'Issue Resolution Fee',
+        order_id: orderId,
+        handler: async function (response) {
+          try {
+            // Verify payment
+            await verifyMutation.mutateAsync({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              paymentId: paymentId
+            })
+          } catch (error) {
+            console.error('Payment verification error:', error)
+            toast.error('Payment verification failed. Please contact support.')
+          }
+        },
+        prefill: {
+          name: `${application.student?.firstName} ${application.student?.lastName}`,
+          email: application.student?.email || '',
+          contact: application.student?.phone || ''
+        },
+        theme: {
+          color: '#3395FF'
+        },
+        modal: {
+          ondismiss: function() {
+            setProcessing(false)
+            toast.info('Payment cancelled')
+          }
         }
-      } catch (err) {
-        console.log('Application status update skipped:', err.message)
       }
 
-      // Show success and redirect
-      toast.success('Payment successful!')
-      setShowMockCheckout(false)
-      queryClient.invalidateQueries(['application', applicationId])
-      queryClient.invalidateQueries(['admin-applications'])
-      navigate(`/applications/${applicationId}`)
+      const razorpay = new window.Razorpay(options)
+      razorpay.on('payment.failed', function (response) {
+        setProcessing(false)
+        toast.error('Payment failed: ' + (response.error.description || 'Unknown error'))
+      })
+      
+      razorpay.open()
+      setProcessing(false)
     } catch (error) {
-      console.error('Payment processing error:', error)
-      // Still show success for demo
-      toast.success('Payment successful!')
-      setShowMockCheckout(false)
-      queryClient.invalidateQueries(['application', applicationId])
-      navigate(`/applications/${applicationId}`)
+      setProcessing(false)
+      console.error('Payment initiation error:', error)
+      toast.error(error.response?.data?.error || error.response?.data?.message || 'Failed to initiate payment')
     }
   }
+
 
   if (!application) {
     return (
@@ -247,10 +285,15 @@ export default function PaymentPage() {
         <div className="space-y-4">
           <button
             onClick={handlePayment}
-            disabled={processing || amount <= 0 || !canMakePayment}
+            disabled={processing || amount <= 0 || !canMakePayment || !razorpayLoaded}
             className="w-full btn-primary py-4 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {processing ? (
+            {!razorpayLoaded ? (
+              <>
+                <i className="fas fa-spinner fa-spin mr-2"></i>
+                Loading Payment Gateway...
+              </>
+            ) : processing ? (
               <>
                 <i className="fas fa-spinner fa-spin mr-2"></i>
                 Processing...
@@ -287,23 +330,6 @@ export default function PaymentPage() {
         </div>
       </div>
 
-      {/* Mock Razorpay Checkout Modal */}
-      {showMockCheckout && (
-        <MockRazorpayCheckout
-          amount={amount * 100} // Convert to paise
-          currency="INR"
-          description={paymentType === 'application_fee' 
-            ? `Application Fee for ${application.university?.name}`
-            : 'Issue Resolution Fee'}
-          name="UniApply"
-          email={application.student?.email}
-          onSuccess={handleMockPaymentSuccess}
-          onClose={() => {
-            setShowMockCheckout(false)
-            toast.info('Payment cancelled')
-          }}
-        />
-      )}
     </div>
   )
 }

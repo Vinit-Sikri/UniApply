@@ -156,3 +156,4 @@ Once Razorpay keys are configured:
 2. Test payment flow
 3. All three tiers are working!
 
+

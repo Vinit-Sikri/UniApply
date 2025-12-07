@@ -192,3 +192,4 @@ curl -X POST http://localhost:5000/api/auth/register \
 - `409` - Conflict (duplicate entry)
 - `500` - Server Error
 
+

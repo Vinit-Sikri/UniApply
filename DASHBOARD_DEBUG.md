@@ -78,3 +78,4 @@ Share:
 2. Network tab errors (F12 → Network → Filter: XHR)
 3. Screenshot of what you see
 
+

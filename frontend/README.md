@@ -30,3 +30,4 @@ npm run build
 - Responsive design with Tailwind CSS
 - Modern React patterns with hooks and context
 
+

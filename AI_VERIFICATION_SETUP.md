@@ -223,3 +223,4 @@ If you encounter issues:
 3. Ensure database is properly migrated
 4. Test API key directly with Gemini API
 
+

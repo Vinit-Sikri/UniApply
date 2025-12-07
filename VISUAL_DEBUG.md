@@ -75,3 +75,4 @@ If you see NONE of these, there's a rendering issue.
 3. **Try Different Browser:** Chrome, Firefox, Edge
 4. **Check Backend:** Make sure http://localhost:5000/api/health works
 
+

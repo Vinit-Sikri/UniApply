@@ -154,3 +154,4 @@ VITE_API_URL=https://uniapply-backend.onrender.com
 - **Database connection failed?** - Verify DB credentials are correct
 - **Frontend can't connect?** - Check `VITE_API_URL` matches backend URL
 
+

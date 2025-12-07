@@ -259,3 +259,4 @@ MAX_FILE_SIZE = 10485760
 | GEMINI_API_KEY      | Google AI Studio      | `AIzaSyB...`                             |
 | FRONTEND_URL        | After frontend deploy | `https://uniapply-frontend.onrender.com` |
 | VITE_API_URL        | After backend deploy  | `https://uniapply-backend.onrender.com`  |
+

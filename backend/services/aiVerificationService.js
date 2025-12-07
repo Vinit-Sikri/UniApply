@@ -17,71 +17,82 @@ const generateMockVerificationResult = (application, documents) => {
   // Generate realistic mock scores based on application data
   const hasDocuments = documents && documents.length > 0;
   const docCount = documents ? documents.length : 0;
-  
-  // Document quality score (higher if more documents)
-  const docQualityScore = hasDocuments 
-    ? Math.min(85 + (docCount * 2), 95) 
-    : 60;
-  
-  // Correspondence score (assume good if documents exist)
-  const correspondenceScore = hasDocuments ? 88 : 70;
-  
-  // Eligibility score (assume good for demo)
-  const eligibilityScore = 82;
-  
-  // Calculate overall score
-  const overallScore = Math.round((docQualityScore + correspondenceScore + eligibilityScore) / 3);
-  
+
+  // Document quality score (0 if no documents, higher if more documents)
+  const docQualityScore = hasDocuments
+    ? Math.min(85 + (docCount * 2), 95)
+    : 0; // 0 if no documents uploaded
+
+  // Correspondence score (0 if no documents, good if documents exist)
+  const correspondenceScore = hasDocuments ? 88 : 0; // 0 if no documents
+
+  // Eligibility score (assume good for demo, but lower if no documents)
+  const eligibilityScore = hasDocuments ? 82 : 50; // Lower if no documents
+
+  // Calculate overall score (only average non-zero scores)
+  const scores = [docQualityScore, correspondenceScore, eligibilityScore].filter(s => s > 0);
+  const overallScore = scores.length > 0
+    ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length)
+    : 0; // 0 if no documents at all
+
   // Determine recommendation
   let overallRecommendation = 'review';
-  if (overallScore >= 85) {
+  if (!hasDocuments || docCount === 0) {
+    overallRecommendation = 'reject'; // Reject if no documents
+  } else if (overallScore >= 85) {
     overallRecommendation = 'approve';
   } else if (overallScore < 60) {
     overallRecommendation = 'reject';
   }
-  
+
   // Generate flags based on conditions
   const flags = [];
-  if (!hasDocuments || docCount < 2) {
-    flags.push('Insufficient documents uploaded');
+  if (!hasDocuments || docCount === 0) {
+    flags.push('No documents uploaded - Cannot verify application');
+  } else if (docCount < 2) {
+    flags.push('Insufficient documents uploaded - At least 2 documents required');
   }
-  if (docCount < 4) {
+  if (docCount > 0 && docCount < 4) {
     flags.push('Some required documents may be missing');
   }
   if (application.program && application.program.length < 3) {
     flags.push('Program name seems incomplete');
   }
-  
+
   return {
     documentQuality: {
       qualityScore: docQualityScore,
       clarity: hasDocuments ? 'clear' : 'unknown',
-      completeness: docCount >= 4 ? 'complete' : 'incomplete',
+      completeness: docCount >= 4 ? 'complete' : docCount > 0 ? 'incomplete' : 'no_documents',
       extractedInfo: {
         names: [],
         dates: [],
         numbers: [],
         other: []
       },
-      issues: docCount < 2 ? ['Limited documents available for review'] : [],
-      recommendation: docQualityScore >= 80 ? 'approve' : 'review'
+      issues: !hasDocuments
+        ? ['No documents uploaded - Cannot assess document quality']
+        : docCount < 2
+          ? ['Limited documents available for review']
+          : [],
+      recommendation: !hasDocuments ? 'reject' : docQualityScore >= 80 ? 'approve' : 'review'
     },
     correspondence: {
       correspondenceScore: correspondenceScore,
-      nameMatch: true,
-      programMatch: true,
-      dateConsistency: true,
-      discrepancies: [],
-      recommendation: correspondenceScore >= 85 ? 'approve' : 'review',
-      flags: []
+      nameMatch: hasDocuments, // Can't verify if no documents
+      programMatch: hasDocuments, // Can't verify if no documents
+      dateConsistency: hasDocuments, // Can't verify if no documents
+      discrepancies: !hasDocuments ? ['Cannot verify correspondence - No documents uploaded'] : [],
+      recommendation: !hasDocuments ? 'reject' : correspondenceScore >= 85 ? 'approve' : 'review',
+      flags: !hasDocuments ? ['No documents to verify correspondence'] : []
     },
     eligibility: {
-      eligible: true,
+      eligible: hasDocuments, // Not eligible if no documents
       score: eligibilityScore,
-      metCriteria: ['Application submitted', 'Documents provided'],
-      missingCriteria: [],
-      recommendation: eligibilityScore >= 80 ? 'approve' : 'review',
-      flags: []
+      metCriteria: hasDocuments ? ['Application submitted', 'Documents provided'] : ['Application submitted'],
+      missingCriteria: !hasDocuments ? ['No documents uploaded'] : [],
+      recommendation: !hasDocuments ? 'reject' : eligibilityScore >= 80 ? 'approve' : 'review',
+      flags: !hasDocuments ? ['No documents to verify eligibility'] : []
     },
     verifiedAt: new Date(),
     overallScore: overallScore,
@@ -139,7 +150,7 @@ const verifyApplication = async (applicationId) => {
 
     // Perform AI verification (with fallback to mock data)
     let verificationResult;
-    
+
     if (!performAIVerification) {
       console.warn('AI verification not available, using mock data');
       verificationResult = generateMockVerificationResult(application, documents);
@@ -158,11 +169,11 @@ const verifyApplication = async (applicationId) => {
 
     // Update application with results
     const flags = verificationResult.flags || [];
-    
+
     // Remove isMockData flag before storing (internal use only)
     const resultToStore = { ...verificationResult };
     delete resultToStore.isMockData;
-    
+
     await application.update({
       aiVerificationStatus: 'completed',
       aiVerificationResult: resultToStore,

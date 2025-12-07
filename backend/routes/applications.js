@@ -59,6 +59,8 @@ router.get('/', authenticate, async (req, res, next) => {
 // Get application by ID
 router.get('/:id', authenticate, async (req, res, next) => {
   try {
+    const { Document } = require('../models');
+    
     const application = await Application.findByPk(req.params.id, {
       include: [
         {
@@ -69,6 +71,16 @@ router.get('/:id', authenticate, async (req, res, next) => {
           model: User,
           as: 'student',
           attributes: { exclude: ['password'] }
+        },
+        {
+          model: Document,
+          as: 'documents',
+          include: [{
+            model: require('../models').DocumentType,
+            as: 'documentType',
+            attributes: ['id', 'name', 'code', 'isRequired']
+          }],
+          order: [['createdAt', 'DESC']]
         }
       ]
     });

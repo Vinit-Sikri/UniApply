@@ -131,3 +131,4 @@ After fixing:
 - **Fix**: Update `FRONTEND_URL` in backend
 - **Fix**: Backend will automatically allow that origin
 
+

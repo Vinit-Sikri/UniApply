@@ -66,3 +66,4 @@ npm run dev
 ## Database Sync
 The server will automatically sync the database schema on startup (in development mode). The new Application model fields will be added automatically.
 
+

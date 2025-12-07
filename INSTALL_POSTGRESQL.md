@@ -205,3 +205,4 @@ If you encounter issues:
 3. Ensure database `uniapply_db` exists
 4. Confirm `.env` file has correct credentials
 
+

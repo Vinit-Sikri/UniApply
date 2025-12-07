@@ -64,3 +64,4 @@ These fees will be used when students make payments!
 
 🎉 **You can now create applications!**
 
+

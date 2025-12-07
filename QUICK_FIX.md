@@ -86,3 +86,4 @@ Then your registration will work!
 2. Make sure PostgreSQL service is running: `Get-Service postgresql*`
 3. Verify database exists: Use pgAdmin GUI (easier than command line)
 
+

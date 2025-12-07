@@ -223,6 +223,74 @@ export default function AdminApplicationReview() {
         </div>
       </div>
 
+      {/* Documents Section */}
+      <div className="card">
+        <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <i className="fas fa-file-alt text-blue-600"></i>
+          Uploaded Documents
+        </h2>
+        {application.documents && application.documents.length > 0 ? (
+          <div className="space-y-3">
+            {application.documents.map((doc) => (
+              <div key={doc.id} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3 flex-1">
+                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <i className="fas fa-file-pdf text-blue-600 text-xl"></i>
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-medium text-gray-900">{doc.originalFileName}</p>
+                      <p className="text-sm text-gray-500">
+                        {doc.documentType?.name || 'Unknown Type'}
+                        {doc.documentType?.isRequired && (
+                          <span className="ml-2 text-red-600">(Required)</span>
+                        )}
+                      </p>
+                      <p className="text-xs text-gray-400 mt-1">
+                        Uploaded: {new Date(doc.createdAt).toLocaleString()}
+                        {doc.fileSize && (
+                          <span className="ml-2">
+                            • {(doc.fileSize / 1024 / 1024).toFixed(2)} MB
+                          </span>
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                      doc.status === 'verified' 
+                        ? 'bg-green-100 text-green-700'
+                        : doc.status === 'rejected'
+                        ? 'bg-red-100 text-red-700'
+                        : 'bg-yellow-100 text-yellow-700'
+                    }`}>
+                      {doc.status.charAt(0).toUpperCase() + doc.status.slice(1)}
+                    </span>
+                    {doc.filePath && (
+                      <a
+                        href={`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/documents/${doc.id}/download`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm"
+                      >
+                        <i className="fas fa-download mr-1"></i>
+                        Download
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-8 bg-gray-50 rounded-lg">
+            <i className="fas fa-file-alt text-gray-400 text-4xl mb-3"></i>
+            <p className="text-gray-600 font-medium">No documents uploaded</p>
+            <p className="text-sm text-gray-500 mt-1">Student has not uploaded any documents for this application</p>
+          </div>
+        )}
+      </div>
+
       {/* AI Verification Results */}
       <div className={`card border-2 ${
         application.aiVerificationStatus === 'completed' 

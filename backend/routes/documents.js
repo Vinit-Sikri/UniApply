@@ -130,6 +130,37 @@ router.get('/:id', authenticate, async (req, res, next) => {
   }
 });
 
+// Download document
+router.get('/:id/download', authenticate, async (req, res, next) => {
+  try {
+    const document = await Document.findByPk(req.params.id);
+
+    if (!document) {
+      return res.status(404).json({ error: 'Document not found' });
+    }
+
+    // Students can only download their own documents
+    // Admins can download any document
+    if (req.user.role === 'student' && document.userId !== req.user.id) {
+      return res.status(403).json({ error: 'Access denied' });
+    }
+
+    // Check if file exists
+    if (!document.filePath || !fs.existsSync(document.filePath)) {
+      return res.status(404).json({ error: 'File not found' });
+    }
+
+    // Set headers for file download
+    res.setHeader('Content-Disposition', `attachment; filename="${document.originalFileName}"`);
+    res.setHeader('Content-Type', document.mimeType || 'application/octet-stream');
+
+    // Send file
+    res.sendFile(path.resolve(document.filePath));
+  } catch (error) {
+    next(error);
+  }
+});
+
 // Upload document
 router.post('/', authenticate, upload.single('file'), async (req, res, next) => {
   try {
