@@ -2,6 +2,18 @@
 
 > A full-stack platform simplifying university applications with centralized management, AI-powered document verification, and a robust admin review system.
 
+## 🔗 Live Demo & Access
+
+**🌐 Deployed Application:** [https://uniapply-frontendd.onrender.com/](https://uniapply-frontendd.onrender.com/)
+
+### 🔑 Default Admin Credentials
+Use the following credentials to log in and test the Admin Portal features:
+* **Email:** `admin@university.edu`
+* **Password:** `admin123`
+* **Role:** `Admin`
+
+---
+
 ## 📖 Overview
 
 **UniApply** is a unified platform designed to bridge the gap between students and universities. It allows students to apply to multiple institutions, upload documents, and track progress from a single dashboard. For administrators, it offers a powerful **two-level verification system** combining Artificial Intelligence with manual oversight to ensure authenticity and eligibility.
@@ -108,7 +120,7 @@ SESSION_SECRET=development_session_secret
 # AI & Upload Services (Optional for basic setup)
 AI_API_KEY=your_ai_api_key
 
-cd frontend
+cd ../frontend
 npm install
 
 NEXT_PUBLIC_API_URL=http://localhost:5000/api
