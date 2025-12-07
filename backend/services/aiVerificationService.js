@@ -26,12 +26,12 @@ const generateMockVerificationResult = (application, documents) => {
   // Correspondence score (0 if no documents, good if documents exist)
   const correspondenceScore = hasDocuments ? 88 : 0; // 0 if no documents
 
-  // Eligibility score (assume good for demo, but lower if no documents)
-  const eligibilityScore = hasDocuments ? 82 : 50; // Lower if no documents
-
+  // Eligibility score (assume good for demo, but 0 if no documents)
+  const eligibilityScore = hasDocuments ? 82 : 0; // 0 if no documents (can't verify eligibility)
+  
   // Calculate overall score (only average non-zero scores)
   const scores = [docQualityScore, correspondenceScore, eligibilityScore].filter(s => s > 0);
-  const overallScore = scores.length > 0
+  const overallScore = scores.length > 0 
     ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length)
     : 0; // 0 if no documents at all
 
@@ -88,7 +88,7 @@ const generateMockVerificationResult = (application, documents) => {
     },
     eligibility: {
       eligible: hasDocuments, // Not eligible if no documents
-      score: eligibilityScore,
+      score: eligibilityScore, // 0 if no documents, 82 if documents exist
       metCriteria: hasDocuments ? ['Application submitted', 'Documents provided'] : ['Application submitted'],
       missingCriteria: !hasDocuments ? ['No documents uploaded'] : [],
       recommendation: !hasDocuments ? 'reject' : eligibilityScore >= 80 ? 'approve' : 'review',

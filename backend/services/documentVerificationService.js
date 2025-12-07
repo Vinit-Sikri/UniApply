@@ -17,17 +17,17 @@ const generateRandomVerificationResult = (document) => {
   // Random verification result (70% chance of approval, 20% review, 10% reject)
   const random = Math.random();
   let recommendation = 'review';
-  let qualityScore = 70;
+  let qualityScore;
   
   if (random < 0.7) {
     recommendation = 'approve';
-    qualityScore = Math.floor(Math.random() * 20) + 80; // 80-100
+    qualityScore = Math.floor(Math.random() * 21) + 80; // 80-100 (inclusive)
   } else if (random < 0.9) {
     recommendation = 'review';
-    qualityScore = Math.floor(Math.random() * 20) + 60; // 60-80
+    qualityScore = Math.floor(Math.random() * 21) + 60; // 60-80 (inclusive)
   } else {
     recommendation = 'reject';
-    qualityScore = Math.floor(Math.random() * 30) + 30; // 30-60
+    qualityScore = Math.floor(Math.random() * 31) + 30; // 30-60 (inclusive)
   }
   
   // Random clarity

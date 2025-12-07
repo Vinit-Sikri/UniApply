@@ -145,6 +145,10 @@ export default function AdminApplicationReview() {
   }
 
   const application = data
+  
+  // Debug: Log documents
+  console.log('Application documents:', application?.documents)
+  console.log('Documents count:', application?.documents?.length)
 
   return (
     <div className="space-y-6">
