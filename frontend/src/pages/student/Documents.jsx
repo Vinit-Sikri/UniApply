@@ -6,52 +6,13 @@ import toast from 'react-hot-toast'
 import { format } from 'date-fns'
 
 export default function StudentDocuments() {
-  const [uploading, setUploading] = useState(false)
   const queryClient = useQueryClient()
 
   const { data: documentsData, isLoading } = useQuery('documents', () =>
     api.get('/documents').then(res => res.data)
   )
 
-  const { data: documentTypesData } = useQuery('document-types', () =>
-    api.get('/documents/types').then(res => res.data.documentTypes).catch(() => [])
-  )
-
-  const documentTypes = documentTypesData || []
-
   const documents = documentsData?.documents || []
-
-  const handleFileUpload = async (e) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-
-    const formData = new FormData()
-    formData.append('file', file)
-    
-    const documentTypeId = documentTypes?.[0]?.id
-    if (!documentTypeId) {
-      toast.error('No document types available. Please contact admin.')
-      return
-    }
-
-    formData.append('documentTypeId', documentTypeId)
-
-    setUploading(true)
-    try {
-      await api.post('/documents', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-      toast.success('Document uploaded successfully')
-      queryClient.invalidateQueries('documents')
-      e.target.value = '' // Reset input
-    } catch (error) {
-      toast.error(error.response?.data?.error || 'Failed to upload document')
-    } finally {
-      setUploading(false)
-    }
-  }
 
   const getStatusColor = (status) => {
     const colors = {
@@ -77,26 +38,13 @@ export default function StudentDocuments() {
           <h1 className="text-2xl font-bold text-gray-900">My Documents</h1>
           <p className="text-gray-500 mt-1">Upload and manage your application documents</p>
         </div>
-        <div className="flex gap-3">
-          <Link
-            to="/documents/upload-wizard"
-            className="btn-primary"
-          >
-            <i className="fas fa-magic mr-2"></i>
-            Guided Upload Wizard
-          </Link>
-          <label className="btn-secondary cursor-pointer">
-            <i className="fas fa-upload mr-2"></i>
-            {uploading ? 'Uploading...' : 'Quick Upload'}
-            <input
-              type="file"
-              className="hidden"
-              onChange={handleFileUpload}
-              disabled={uploading}
-              accept=".pdf,.jpg,.jpeg,.png"
-            />
-          </label>
-        </div>
+        <Link
+          to="/documents/upload-wizard"
+          className="btn-primary"
+        >
+          <i className="fas fa-upload mr-2"></i>
+          Quick Upload
+        </Link>
       </div>
 
       {documents.length > 0 ? (
@@ -145,25 +93,13 @@ export default function StudentDocuments() {
         <div className="card text-center py-12">
           <i className="fas fa-upload text-gray-300 text-5xl mb-4"></i>
           <p className="text-gray-500 mb-4">No documents uploaded yet</p>
-          <div className="flex gap-3 justify-center">
-            <Link
-              to="/documents/upload-wizard"
-              className="btn-primary inline-block"
-            >
-              <i className="fas fa-upload mr-2"></i>
-              Quick Upload
-            </Link>
-            {/* <label className="btn-secondary inline-block cursor-pointer">
-              <i className="fas fa-upload mr-2"></i>
-              Quick Upload
-              <input
-                type="file"
-                className="hidden"
-                onChange={handleFileUpload}
-                accept=".pdf,.jpg,.jpeg,.png"
-              />
-            </label> */}
-          </div>
+          <Link
+            to="/documents/upload-wizard"
+            className="btn-primary inline-block"
+          >
+            <i className="fas fa-upload mr-2"></i>
+            Quick Upload
+          </Link>
         </div>
       )}
     </div>
