@@ -75,12 +75,13 @@ router.get('/:id', authenticate, async (req, res, next) => {
         {
           model: Document,
           as: 'documents',
+          required: false, // LEFT JOIN - include even if no documents
+          separate: false, // Include in same query
           include: [{
             model: require('../models').DocumentType,
             as: 'documentType',
             attributes: ['id', 'name', 'code', 'isRequired']
-          }],
-          order: [['createdAt', 'DESC']]
+          }]
         }
       ]
     });
@@ -88,6 +89,31 @@ router.get('/:id', authenticate, async (req, res, next) => {
     if (!application) {
       return res.status(404).json({ error: 'Application not found' });
     }
+
+    // Manually fetch documents if not included (fallback)
+    if (!application.documents || application.documents.length === 0) {
+      const documents = await Document.findAll({
+        where: { applicationId: application.id },
+        include: [{
+          model: require('../models').DocumentType,
+          as: 'documentType',
+          attributes: ['id', 'name', 'code', 'isRequired']
+        }],
+        order: [['createdAt', 'DESC']]
+      });
+      application.documents = documents;
+    }
+
+    console.log('Application fetch:', {
+      applicationId: req.params.id,
+      documentsCount: application?.documents?.length || 0,
+      documents: application?.documents?.map(d => ({ 
+        id: d.id, 
+        name: d.originalFileName, 
+        appId: d.applicationId,
+        type: d.documentType?.name 
+      })) || []
+    });
 
     // Students can only view their own applications
     if (req.user.role === 'student' && application.studentId !== req.user.id) {

@@ -170,6 +170,13 @@ router.post('/', authenticate, upload.single('file'), async (req, res, next) => 
 
     const { applicationId, documentTypeId } = req.body;
 
+    console.log('Document upload request:', {
+      userId: req.user.id,
+      applicationId: applicationId || 'NOT PROVIDED',
+      documentTypeId,
+      fileName: req.file?.originalname
+    });
+
     // Verify document type exists
     const documentType = await DocumentType.findByPk(documentTypeId);
     if (!documentType || !documentType.isActive) {
@@ -209,6 +216,12 @@ router.post('/', authenticate, upload.single('file'), async (req, res, next) => 
       fileSize: req.file.size,
       mimeType: req.file.mimetype,
       status: 'pending'
+    });
+
+    console.log('Document created:', {
+      id: document.id,
+      applicationId: document.applicationId,
+      originalFileName: document.originalFileName
     });
 
     const createdDoc = await Document.findByPk(document.id, {

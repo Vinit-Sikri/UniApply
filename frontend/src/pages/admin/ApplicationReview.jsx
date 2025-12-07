@@ -147,8 +147,15 @@ export default function AdminApplicationReview() {
   const application = data
   
   // Debug: Log documents
+  console.log('Application data:', application)
   console.log('Application documents:', application?.documents)
   console.log('Documents count:', application?.documents?.length)
+  console.log('Application ID:', application?.id)
+  
+  // Check if documents exist but aren't showing
+  if (application && !application.documents) {
+    console.warn('⚠️ Documents property is missing from application object')
+  }
 
   return (
     <div className="space-y-6">
