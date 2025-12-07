@@ -262,6 +262,11 @@ router.post('/create-order', authenticate, async (req, res, next) => {
     }
 
     // Create payment record
+    // Generate transaction ID (required field)
+    const timestamp = Date.now();
+    const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+    const transactionId = `TXN-${timestamp}-${random}`;
+    
     let payment;
     try {
       payment = await Payment.create({
@@ -272,6 +277,7 @@ router.post('/create-order', authenticate, async (req, res, next) => {
         paymentMethod: 'razorpay',
         paymentType,
         status: 'pending',
+        transactionId: transactionId,
         gatewayTransactionId: order.id,
         gatewayResponse: order
       });
@@ -408,14 +414,21 @@ router.post('/', authenticate, async (req, res, next) => {
       // Use university fee if amount not specified
       const paymentAmount = amount || university.applicationFee;
       
+      // Generate transaction ID (required field)
+      const timestamp = Date.now();
+      const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+      const transactionId = `TXN-${timestamp}-${random}`;
+      
       const payment = await Payment.create({
         userId: req.user.id,
         applicationId,
         amount: paymentAmount,
+        currency: 'INR',
         paymentMethod: paymentMethod || 'other',
         paymentType: paymentType || 'application_fee',
         paymentGateway: paymentGateway || null,
-        status: 'pending'
+        status: 'pending',
+        transactionId: transactionId
       });
 
       res.status(201).json({
