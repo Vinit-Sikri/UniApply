@@ -47,13 +47,29 @@ export default function DocumentUploadWizard() {
   const navigate = useNavigate()
   const location = useLocation()
   const queryClient = useQueryClient()
-  const applicationId = location.state?.applicationId
+  const initialApplicationId = location.state?.applicationId
 
+  const [selectedApplicationId, setSelectedApplicationId] = useState(initialApplicationId || null)
   const [currentStep, setCurrentStep] = useState(0)
   const [uploadedDocs, setUploadedDocs] = useState({})
   const [uploading, setUploading] = useState(false)
   const [file, setFile] = useState(null)
   const [preview, setPreview] = useState(null)
+
+  // Fetch student applications
+  const { data: applicationsData, isLoading: appsLoading } = useQuery(
+    'student-applications',
+    () => api.get('/applications').then(res => res.data),
+    {
+      onSuccess: (data) => {
+        // Auto-select if only one application exists
+        const apps = data?.applications || []
+        if (apps.length === 1 && !selectedApplicationId) {
+          setSelectedApplicationId(apps[0].id)
+        }
+      }
+    }
+  )
 
   // Fetch document types from backend
   const { data: documentTypesData } = useQuery('document-types', () =>
@@ -61,6 +77,7 @@ export default function DocumentUploadWizard() {
   )
 
   const documentTypes = documentTypesData || []
+  const applications = applicationsData?.applications || []
   
   // Map IIT documents to backend document types
   const getDocumentTypeId = (docCode) => {
@@ -83,7 +100,7 @@ export default function DocumentUploadWizard() {
     },
     {
       onSuccess: (data) => {
-        toast.success(`${currentDocument.name} uploaded successfully!`)
+        toast.success(`${currentDocument.name} uploaded successfully and linked to your application!`)
         setUploadedDocs(prev => ({
           ...prev,
           [currentDocument.id]: data.document
@@ -91,6 +108,7 @@ export default function DocumentUploadWizard() {
         setFile(null)
         setPreview(null)
         queryClient.invalidateQueries('documents')
+        queryClient.invalidateQueries(['application', selectedApplicationId])
       },
       onError: (error) => {
         toast.error(error.response?.data?.error || 'Failed to upload document')
@@ -141,14 +159,16 @@ export default function DocumentUploadWizard() {
       return
     }
 
+    if (!selectedApplicationId) {
+      toast.error('Please select an application first')
+      return
+    }
+
     setUploading(true)
     const formData = new FormData()
     formData.append('file', file)
     formData.append('documentTypeId', documentTypeId)
-    
-    if (applicationId) {
-      formData.append('applicationId', applicationId)
-    }
+    formData.append('applicationId', selectedApplicationId) // Always link to application
     
     try {
       await uploadMutation.mutateAsync(formData)
@@ -188,21 +208,87 @@ export default function DocumentUploadWizard() {
   }
 
   const isUploaded = uploadedDocs[currentDocument.id] !== undefined
-  const canProceed = isUploaded || (!currentDocument.required && file === null)
+  const canProceed = (isUploaded || (!currentDocument.required && file === null)) && selectedApplicationId
   const documentTypeId = getDocumentTypeId(currentDocument.code)
 
-  // Show loading if document types not loaded
-  if (documentTypes.length === 0) {
+  // Show loading if document types or applications not loaded
+  if (documentTypes.length === 0 || appsLoading) {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-        <span className="ml-3 text-gray-600">Loading document types...</span>
+        <span className="ml-3 text-gray-600">Loading...</span>
+      </div>
+    )
+  }
+
+  // Show error if no applications
+  if (applications.length === 0) {
+    return (
+      <div className="max-w-4xl mx-auto">
+        <div className="card text-center py-12">
+          <i className="fas fa-exclamation-triangle text-yellow-500 text-5xl mb-4"></i>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">No Applications Found</h2>
+          <p className="text-gray-600 mb-6">
+            You need to create an application before uploading documents.
+          </p>
+          <button
+            onClick={() => navigate('/applications/new')}
+            className="btn-primary"
+          >
+            <i className="fas fa-plus mr-2"></i>
+            Create Application
+          </button>
+        </div>
       </div>
     )
   }
 
   return (
     <div className="max-w-4xl mx-auto">
+      {/* Application Selection */}
+      {applications.length > 1 && (
+        <div className="card mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Select Application <span className="text-red-500">*</span>
+          </label>
+          <select
+            value={selectedApplicationId || ''}
+            onChange={(e) => setSelectedApplicationId(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            disabled={currentStep > 0} // Disable after starting upload
+          >
+            <option value="">-- Select Application --</option>
+            {applications.map((app) => (
+              <option key={app.id} value={app.id}>
+                {app.applicationNumber} - {app.university?.name} - {app.program}
+              </option>
+            ))}
+          </select>
+          {currentStep > 0 && (
+            <p className="text-xs text-gray-500 mt-2">
+              <i className="fas fa-info-circle mr-1"></i>
+              Application cannot be changed after starting upload
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* Show selected application info if only one */}
+      {applications.length === 1 && selectedApplicationId && (
+        <div className="card mb-6 bg-blue-50 border-2 border-blue-200">
+          <div className="flex items-center gap-3">
+            <i className="fas fa-info-circle text-blue-600"></i>
+            <div className="flex-1">
+              <p className="text-sm font-medium text-blue-900">Documents will be stored in this application:</p>
+              <p className="text-xs text-blue-700 mt-1">
+                <i className="fas fa-file-alt mr-1"></i>
+                {applications[0].applicationNumber} - {applications[0].university?.name} - {applications[0].program}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Progress Bar */}
       <div className="mb-8">
         <div className="flex justify-between items-center mb-2">

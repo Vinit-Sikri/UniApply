@@ -220,8 +220,14 @@ router.post('/', authenticate, upload.single('file'), async (req, res, next) => 
       ]
     });
 
+    // Trigger AI verification automatically (async, don't block response)
+    const { triggerAutoVerification } = require('../services/documentVerificationService');
+    triggerAutoVerification(document.id).catch(err => {
+      console.error('Failed to trigger document verification:', err);
+    });
+
     res.status(201).json({
-      message: 'Document uploaded successfully',
+      message: 'Document uploaded successfully. AI verification in progress.',
       document: createdDoc
     });
   } catch (error) {
@@ -255,6 +261,35 @@ router.post('/:id/review', authenticate, authorize('admin', 'super_admin'), asyn
     });
   } catch (error) {
     next(error);
+  }
+});
+
+// AI Verify document (admin only)
+router.post('/:id/ai-verify', authenticate, authorize('admin', 'super_admin'), async (req, res, next) => {
+  try {
+    const { verifyDocument } = require('../services/documentVerificationService');
+    const result = await verifyDocument(req.params.id);
+    
+    const document = await Document.findByPk(req.params.id, {
+      include: [
+        {
+          model: DocumentType,
+          as: 'documentType'
+        }
+      ]
+    });
+
+    res.json({
+      message: 'Document verification completed',
+      document,
+      verificationResult: result.result
+    });
+  } catch (error) {
+    console.error('Document AI verification error:', error);
+    res.status(500).json({
+      error: 'Document verification failed',
+      message: error.message
+    });
   }
 });
 

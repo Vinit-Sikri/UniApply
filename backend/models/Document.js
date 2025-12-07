@@ -70,6 +70,30 @@ const Document = sequelize.define('Document', {
   reviewedAt: {
     type: DataTypes.DATE,
     allowNull: true
+  },
+  // AI Verification Fields
+  aiVerificationStatus: {
+    type: DataTypes.STRING,
+    defaultValue: 'pending',
+    allowNull: false,
+    validate: {
+      isIn: [['pending', 'processing', 'completed', 'failed']]
+    }
+  },
+  aiVerificationResult: {
+    type: DataTypes.JSONB,
+    allowNull: true,
+    comment: 'AI verification results including quality score, clarity, completeness, and extracted information'
+  },
+  aiVerificationDate: {
+    type: DataTypes.DATE,
+    allowNull: true
+  },
+  aiVerificationFlags: {
+    type: DataTypes.JSONB,
+    allowNull: true,
+    defaultValue: [],
+    comment: 'Array of issues flagged by AI for admin review'
   }
 }, {
   tableName: 'documents',

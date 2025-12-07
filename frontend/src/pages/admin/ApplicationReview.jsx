@@ -233,13 +233,26 @@ export default function AdminApplicationReview() {
           <div className="space-y-3">
             {application.documents.map((doc) => (
               <div key={doc.id} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3 flex-1">
+                <div className="flex items-start justify-between">
+                  <div className="flex items-start gap-3 flex-1">
                     <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                       <i className="fas fa-file-pdf text-blue-600 text-xl"></i>
                     </div>
                     <div className="flex-1">
-                      <p className="font-medium text-gray-900">{doc.originalFileName}</p>
+                      <div className="flex items-center gap-2 mb-1">
+                        <p className="font-medium text-gray-900">{doc.originalFileName}</p>
+                        {doc.aiVerificationStatus === 'completed' && doc.aiVerificationResult && (
+                          <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+                            doc.aiVerificationResult.recommendation === 'approve'
+                              ? 'bg-green-100 text-green-700'
+                              : doc.aiVerificationResult.recommendation === 'reject'
+                              ? 'bg-red-100 text-red-700'
+                              : 'bg-yellow-100 text-yellow-700'
+                          }`}>
+                            AI: {doc.aiVerificationResult.recommendation?.toUpperCase()}
+                          </span>
+                        )}
+                      </div>
                       <p className="text-sm text-gray-500">
                         {doc.documentType?.name || 'Unknown Type'}
                         {doc.documentType?.isRequired && (
@@ -254,11 +267,64 @@ export default function AdminApplicationReview() {
                           </span>
                         )}
                       </p>
+                      
+                      {/* AI Verification Results */}
+                      {doc.aiVerificationStatus === 'completed' && doc.aiVerificationResult && (
+                        <div className="mt-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                          <div className="flex items-center justify-between mb-2">
+                            <p className="text-xs font-medium text-gray-700">AI Verification Results</p>
+                            <span className="text-xs font-bold text-gray-900">
+                              Score: {doc.aiVerificationResult.qualityScore || 0}/100
+                            </span>
+                          </div>
+                          <div className="grid grid-cols-2 gap-2 text-xs">
+                            <div>
+                              <span className="text-gray-500">Clarity:</span>
+                              <span className="ml-1 font-medium text-gray-700 capitalize">
+                                {doc.aiVerificationResult.clarity || 'N/A'}
+                              </span>
+                            </div>
+                            <div>
+                              <span className="text-gray-500">Completeness:</span>
+                              <span className="ml-1 font-medium text-gray-700 capitalize">
+                                {doc.aiVerificationResult.completeness || 'N/A'}
+                              </span>
+                            </div>
+                          </div>
+                          {doc.aiVerificationFlags && doc.aiVerificationFlags.length > 0 && (
+                            <div className="mt-2 pt-2 border-t border-gray-200">
+                              <p className="text-xs text-red-600 font-medium mb-1">Issues:</p>
+                              <ul className="text-xs text-gray-600 space-y-0.5">
+                                {doc.aiVerificationFlags.map((flag, idx) => (
+                                  <li key={idx} className="flex items-start gap-1">
+                                    <span className="text-red-500 mt-0.5">•</span>
+                                    <span>{flag}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      
+                      {doc.aiVerificationStatus === 'processing' && (
+                        <div className="mt-2 text-xs text-blue-600">
+                          <i className="fas fa-spinner fa-spin mr-1"></i>
+                          AI verification in progress...
+                        </div>
+                      )}
+                      
+                      {doc.aiVerificationStatus === 'failed' && (
+                        <div className="mt-2 text-xs text-red-600">
+                          <i className="fas fa-exclamation-triangle mr-1"></i>
+                          AI verification failed
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                      doc.status === 'verified' 
+                      doc.status === 'approved' 
                         ? 'bg-green-100 text-green-700'
                         : doc.status === 'rejected'
                         ? 'bg-red-100 text-red-700'
@@ -276,6 +342,17 @@ export default function AdminApplicationReview() {
                         <i className="fas fa-download mr-1"></i>
                         Download
                       </a>
+                    )}
+                    {(doc.aiVerificationStatus !== 'processing' && doc.aiVerificationStatus !== 'completed') && (
+                      <button
+                        onClick={() => documentVerifyMutation.mutate(doc.id)}
+                        disabled={documentVerifyMutation.isLoading}
+                        className="px-3 py-1 bg-purple-600 text-white rounded-lg hover:bg-purple-700 text-sm disabled:opacity-50"
+                        title="Re-run AI verification"
+                      >
+                        <i className="fas fa-robot mr-1"></i>
+                        Verify
+                      </button>
                     )}
                   </div>
                 </div>
